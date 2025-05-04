@@ -81,9 +81,11 @@ const ApplicationReviewModal = ({
           <Separator />
           
           <div>
+            <p className="text-sm text-gray-600 mb-2">
+              Before finalizing your application, you will need to connect your Meta account. This helps us verify your identity and improves your chances of being selected.
+            </p>
             <p className="text-sm text-gray-600 mb-6">
-              By clicking "Confirm & Submit", your application will be sent to the WhatsApp recruitment team. 
-              You will receive an email confirmation and further instructions within a few working days.
+              By clicking "Continue to Meta Login", you agree that your application information will be sent to the WhatsApp recruitment team.
             </p>
             
             <div className="flex flex-col sm:flex-row justify-end space-y-3 sm:space-y-0 sm:space-x-3">
@@ -97,7 +99,7 @@ const ApplicationReviewModal = ({
                 onClick={onSubmit}
                 className="bg-whatsapp-green hover:bg-whatsapp-darkgreen text-white"
               >
-                Confirm & Submit
+                Continue to Meta Login
               </Button>
             </div>
           </div>

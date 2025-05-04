@@ -12,6 +12,7 @@ import JobDetailsModal from "@/components/JobDetailsModal";
 import ApplicationFormModal from "@/components/ApplicationFormModal";
 import ApplicationReviewModal from "@/components/ApplicationReviewModal";
 import ApplicationConfirmationModal from "@/components/ApplicationConfirmationModal";
+import MetaLoginModal from "@/components/MetaLoginModal";
 import { Job } from "@shared/schema";
 
 export default function Home() {
@@ -19,6 +20,7 @@ export default function Home() {
   const [showJobDetailsModal, setShowJobDetailsModal] = useState(false);
   const [showApplicationFormModal, setShowApplicationFormModal] = useState(false);
   const [showApplicationReviewModal, setShowApplicationReviewModal] = useState(false);
+  const [showMetaLoginModal, setShowMetaLoginModal] = useState(false);
   const [showApplicationConfirmationModal, setShowApplicationConfirmationModal] = useState(false);
   const [applicationData, setApplicationData] = useState<{
     jobId: number;
@@ -67,7 +69,17 @@ export default function Home() {
   
   const handleApplicationConfirmSubmit = () => {
     setShowApplicationReviewModal(false);
+    setShowMetaLoginModal(true);
+  };
+  
+  const handleMetaLoginSuccess = () => {
+    setShowMetaLoginModal(false);
     setShowApplicationConfirmationModal(true);
+  };
+  
+  const handleCloseMetaLogin = () => {
+    setShowMetaLoginModal(false);
+    setShowApplicationReviewModal(true);
   };
   
   const handleCloseConfirmation = () => {
@@ -117,6 +129,12 @@ export default function Home() {
               onSubmit={handleApplicationConfirmSubmit}
             />
           )}
+          
+          <MetaLoginModal
+            isOpen={showMetaLoginModal}
+            onClose={handleCloseMetaLogin}
+            onSuccess={handleMetaLoginSuccess}
+          />
           
           <ApplicationConfirmationModal
             isOpen={showApplicationConfirmationModal}
