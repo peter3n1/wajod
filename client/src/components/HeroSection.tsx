@@ -16,8 +16,8 @@ const HeroSection = () => {
       <div className="container mx-auto px-4 md:px-6 lg:px-8 relative z-10">
         <div className="flex flex-col md:flex-row items-center">
           <div className="md:w-1/2 mb-10 md:mb-0 md:pr-8">
-            <h1 className="text-4xl md:text-5xl font-bold mb-4 leading-tight bg-clip-text text-transparent bg-gradient-to-r from-whatsapp-darkgreen to-whatsapp-green">
-              Build What Matters – Join WhatsApp
+            <h1 className="text-4xl md:text-5xl font-bold mb-4 leading-tight text-gray-800">
+              <span className="text-whatsapp-darkgreen">Build What Matters</span> – Join WhatsApp
             </h1>
             <p className="text-lg md:text-xl text-gray-700 mb-8 leading-relaxed">
               We're building private, secure, and simple communication for billions. 
@@ -32,21 +32,19 @@ const HeroSection = () => {
             </Button>
           </div>
           <div className="md:w-1/2 relative">
-            <div className="relative z-10 bg-white p-2 rounded-lg shadow-xl rotate-1 transform transition-transform hover:rotate-0 duration-300">
+            <div className="relative z-10 bg-white p-2 rounded-lg shadow-xl transform transition-transform hover:scale-105 duration-300">
               <img 
-                src="https://wa-production-ac05.up.railway.app/Meta%20Pro%20Support_%20Facebook%20and%20Instagram_files/182887082_173356221337864_1646903397817465068_n.png" 
+                src="https://www.komando.com/wp-content/uploads/2023/03/WhatsApp-phone.jpg" 
                 alt="Person using WhatsApp" 
-                className="w-full object-cover rounded-lg"
+                className="w-full h-auto object-cover rounded-lg"
               />
             </div>
-            <div className="absolute -bottom-4 -right-4 w-2/3 z-0 transform -rotate-2 transition-transform hover:rotate-0 duration-300">
-              <div className="bg-white p-2 rounded-lg shadow-xl">
-                <img 
-                  src="https://images.unsplash.com/photo-1611746872915-64382b5c2a98?q=80&w=2000&auto=format&fit=crop" 
-                  alt="WhatsApp interface" 
-                  className="rounded-lg"
-                />
-              </div>
+            <div className="absolute -bottom-4 right-4 w-32 h-32 z-20 bg-white p-1 rounded-full shadow-lg flex items-center justify-center">
+              <img 
+                src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6b/WhatsApp.svg/1024px-WhatsApp.svg.png" 
+                alt="WhatsApp Logo" 
+                className="w-24 h-24"
+              />
             </div>
           </div>
         </div>

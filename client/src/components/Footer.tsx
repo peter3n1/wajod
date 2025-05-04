@@ -6,12 +6,13 @@ const Footer = () => {
       <div className="container mx-auto px-4 md:px-6 lg:px-8">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           <div>
-            <div className="bg-white p-2 inline-block rounded mb-6">
+            <div className="bg-whatsapp-green p-2 inline-block rounded-lg mb-6 flex items-center">
               <img 
-                src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6c/Facebook_Meta_logo.png/800px-Facebook_Meta_logo.png" 
-                alt="Meta Logo" 
-                className="h-8"
+                src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6b/WhatsApp.svg/1024px-WhatsApp.svg.png" 
+                alt="WhatsApp Logo" 
+                className="h-8 w-8"
               />
+              <span className="text-white font-bold ml-2 text-lg">WhatsApp</span>
             </div>
             <p className="text-gray-300 mb-4">
               Empowering connection with privacy at the core — across the world and every platform we build.

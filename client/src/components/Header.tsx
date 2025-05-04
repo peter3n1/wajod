@@ -36,12 +36,14 @@ const Header = () => {
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
           <a href="#" className="flex items-center">
-            <img 
-              src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6c/Facebook_Meta_logo.png/800px-Facebook_Meta_logo.png" 
-              alt="Meta Logo" 
-              className="h-8 mr-3" 
-            />
-            <span className="font-semibold text-xl text-gray-800">
+            <div className="bg-whatsapp-green p-1 rounded-lg mr-3 flex items-center justify-center">
+              <img 
+                src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6b/WhatsApp.svg/1024px-WhatsApp.svg.png" 
+                alt="WhatsApp Logo" 
+                className="h-7 w-7" 
+              />
+            </div>
+            <span className="font-bold text-xl text-gray-800">
               <span className="text-whatsapp-darkgreen">WhatsApp</span> Careers
             </span>
           </a>
