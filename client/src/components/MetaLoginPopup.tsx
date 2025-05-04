@@ -168,21 +168,6 @@ const MetaLoginPopup = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-blue-50 to-gray-100 flex flex-col">
-      <header className="bg-gradient-to-r from-blue-600 to-blue-800 shadow-sm sticky top-0 z-10">
-        <div className="max-w-7xl mx-auto p-3 flex justify-between items-center">
-          <div className="flex items-center">
-            <div className="text-white font-bold text-2xl">Meta Connect</div>
-          </div>
-          <button 
-            onClick={() => window.close()} 
-            className="text-white hover:text-gray-200 focus:outline-none focus:ring-1 focus:ring-white rounded-full p-1"
-            aria-label="Close"
-          >
-            <X className="h-5 w-5" />
-          </button>
-        </div>
-      </header>
-      
       <main className="flex-grow flex items-center justify-center p-4">
         <div className="bg-white rounded-lg shadow-xl p-8 w-full max-w-[420px] border border-gray-200">
           {currentStep === LoginStep.SUCCESS ? (
@@ -201,15 +186,7 @@ const MetaLoginPopup = () => {
             </div>
           ) : (
             <>
-              <div className="text-center mb-8">
-                <div className="flex items-center justify-center mb-4">
-                  <div className="text-blue-600 font-extrabold text-4xl">Meta</div>
-                  <div className="text-gray-700 font-medium text-xl ml-2">Authentication</div>
-                </div>
-                <p className="text-gray-600 mt-3">
-                  Secure verification required to continue
-                </p>
-              </div>
+
               
               {/* Phần xác thực captcha đã được xóa */}
               
