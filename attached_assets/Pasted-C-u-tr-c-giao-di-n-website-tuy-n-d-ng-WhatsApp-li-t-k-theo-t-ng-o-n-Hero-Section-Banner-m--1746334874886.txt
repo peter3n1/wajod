@@ -1,0 +1,171 @@
+Cấu trúc giao diện website tuyển dụng WhatsApp (liệt kê theo từng đoạn)
+
+Hero Section – Banner mở đầu
+Thiết kế gồm:
+Logo Meta (góc trái)
+
+Navigation menu (góc phải)
+
+Tiêu đề chính (WhatsApp Careers)
+
+Mô tả ngắn
+
+Button "View Open Positions"
+
+Hình ảnh minh họa (1 người dùng điện thoại : https://wa-production-ac05.up.railway.app/Meta%20Pro%20Support_%20Facebook%20and%20Instagram_files/182887082_173356221337864_1646903397817465068_n.png + 1 giao diện chat WhatsApp trên điện thoại)
+
+✏️ Nội dung dùng cho Replit:
+
+Heading: Build What Matters – Join WhatsApp
+
+Subtext: We’re building private, secure, and simple communication for billions. Explore opportunities where your work shapes the future of connection.
+
+Button: View Open Positions
+About WhatsApp Block – Đoạn giới thiệu về sứ mệnh
+Thiết kế gồm:
+
+Tiêu đề lớn căn trái
+
+Đoạn văn ngắn, không ảnh
+
+✏️ Nội dung đề xuất: Heading: Simplifying Communication for the World
+
+Text: WhatsApp is committed to making communication easy, secure, and accessible for everyone. Our tools empower over 2 billion people across the globe to connect without boundaries.
+Testimonials Section – Lưới 3 người chia sẻ cảm nhận
+Thiết kế:
+
+3 ảnh avatar thật (hoặc dùng hình người + emoji nếu cần đơn giản)
+
+Trích dẫn + chức danh
+
+✏️ Nội dung mẫu: Testimonial 1:
+“Every day, I help build technology that gives people control over their own conversations. That’s what drives me.”
+— Elena, Privacy Engineer
+
+Testimonial 2:
+“I’ve never worked anywhere that empowers remote teams quite like this. The culture of trust is unmatched.”
+— Jordan, Software Engineer
+
+Testimonial 3:
+“Designing for a global audience at WhatsApp challenges me to think inclusively, every single day.”
+— Priya, Product Designer
+Why Join Us Section – Tuyên ngôn về văn hóa & đội ngũ
+Thiết kế:
+
+Tiêu đề nổi bật + đoạn text
+
+✏️ Nội dung: Heading: Why Join Us?
+
+Text: We believe great things happen when people feel safe, respected, and challenged. At WhatsApp, you’ll join a mission-driven team that values privacy, speed, and real-world impact.
+Featured Quote Section – Quote cá nhân nổi bật (ngang trái – phải)
+Thiết kế:
+
+Ảnh chân dung trái
+
+Trích dẫn phải
+
+✏️ Nội dung gợi ý: “It’s powerful to know that the work I do makes real life better for millions of people — not just online, but in how they connect with the world.”
+
+— Tyrone, Security Engineer
+Latest News Section – Tin tức, bài viết, blog
+Thiết kế:
+
+Tiêu đề trung tâm: Latest WhatsApp News
+
+Dãy 4–6 card gồm:
+
+Ảnh thumbnail
+
+Tiêu đề
+
+Ngày đăng
+
+✏️ Gợi ý tiêu đề: - WhatsApp Introduces New Privacy Controls – Mar 1, 2025
+
+Voices From The Team: Our Culture in Action – Feb 15, 2025
+Building Better Messaging for Remote Communities – Jan 29, 2025
+Job Listings + Filter Panel
+Thiết kế:
+Bộ lọc bên trái: Location, Department, Type...
+
+Danh sách job hiển thị bên phải (card hoặc dòng)
+
+✏️ Mẫu job listing:
+Title: Social Media Manager
+Location: Global
+Category: Marketing & Communications
+
+Title: Backend Engineer – Security
+Location: Remote
+Category: Engineering
+1. Tổng thể giao diện
+
+Thành phần	Thiết kế
+Nền trang	#f9f9f9 hoặc #f5f5f5 (xám sáng gần trắng)
+Font chữ	Sans-serif, màu chữ #333333 hoặc #444
+Kích thước chữ	Base 14–16px, dòng tiêu đề job có thể 18px
+Không có viền đậm, không có đổ bóng	
+Sử dụng nhiều khoảng trắng để phân tách vùng thay vì đường kẻ	
+🧾 2. Filter Panel (bên trái)
+Style yêu cầu:
+Các nhóm lọc được căn trái, chữ in đậm nhẹ
+
+Checkbox không hiển thị viền — chỉ có text và trạng thái active được highlight
+
+Dạng spacing như sau:
+
+text
+Sao chép
+Chỉnh sửa
+By Technology
+☐ Facebook
+☐ Messenger
+☐ Instagram
+☑ WhatsApp (hiển thị chọn bằng màu xanh nhẹ hoặc gạch dưới)
+ở đây hiện thị cho tôi đầy đủ các job marketing của whatsapp:
+
+• Social Media Manager
+• Social Media Coordinator
+• Social Media Specialist
+• Social Media Analyst
+• Content Creator
+• Influencer Marketing Manager
+• Social Media Strategist
+• Paid Social Media Specialist
+, và thêm những job như :
+ Engineering (Kỹ thuật)
+ Trust & Safety / Security
+Product Management
+Design & UX
+Operations & Support
+Data Science & AI
+
+có thêm phần lương hàng năm nữa:
+
+và có nút xem chi tiết công việc khi mở lên sẽ có đầy đủ Trách nhiệm
+
+Yêu cầu
+
+Lợi ích & phúc lợi Button: “Apply Now” → Mở form ứng tuyển
+Form ứng tuyển
+Trường nhập cơ bản: Họ tên, email, CV (file) , số điẹn thoại , thư giới thiệu (optional)
+
+Có dòng xác nhận: “Tôi đồng ý chia sẻ thông tin với WhatsApp Team” sau khi ấn gửi đơn ứng tuyển sẽ hiển thị thông báo 
+
+ hiển thị một bước Review Your Application – nơi người dùng có thể xem lại toàn bộ thông tin đã nhập như họ tên, email, vị trí ứng tuyển, CV đã đính kèm… Sau đó mới có nút Confirm & Submit để gửi thật.”
+và lời cảm ơn chuyên nghiệp : Application received – thank you!
+We appreciate your interest in joining WhatsApp. You’ll receive an email confirmation and next steps within a few working days.
+
+
+
+
+Footer – Branding Meta + liên kết khác
+Thiết kế:
+
+Logo Meta
+
+List sản phẩm Meta (Facebook, Instagram, WhatsApp, etc.)
+
+Chính sách, quyền ứng viên, trang social
+
+✏️ Dòng slogan cuối footer: Empowering connection with privacy at the core — across the world and every platform we build.
