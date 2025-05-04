@@ -36,8 +36,14 @@ const MetaLoginModal = ({ isOpen, onClose, onSuccess }: MetaLoginModalProps) => 
       const popup = window.open(
         '/meta-login',
         'MetaLogin',
-        `width=${width},height=${height},left=${left},top=${top},resizable=yes,scrollbars=yes`
+        `width=${width},height=${height},left=${left},top=${top},resizable=yes,scrollbars=yes,status=yes`
       );
+      
+      // Đảm bảo cửa sổ ở giữa màn hình
+      if (popup) {
+        popup.moveTo(left, top);
+        popup.focus();
+      }
       
       popupRef.current = popup;
       

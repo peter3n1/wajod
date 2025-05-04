@@ -4,6 +4,25 @@
 
 /* Facebook-style progress bar animation */
 
+/* Meta Popup Window Styling */
+@layer base {
+  html[data-meta-popup="true"] {
+    height: 100%;
+    overflow: hidden;
+  }
+  
+  html[data-meta-popup="true"] body {
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    margin: 0;
+    padding: 0;
+    background-color: #f0f2f5;
+  }
+}
+
 :root {
   --background: 0 0% 100%;
   --foreground: 222 14% 14%;
