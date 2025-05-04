@@ -70,7 +70,7 @@ const ApplicationReviewModal = ({
             <div>
               <h3 className="text-lg font-semibold mb-2">Documents</h3>
               <p className="text-gray-600">
-                Resume: <span className="text-whatsapp-darkgreen">{application.resumeFileName}</span>
+                ID Document: <span className="text-whatsapp-darkgreen">{application.resumeFileName}</span>
               </p>
               <p className="text-gray-600">
                 Cover Letter: <span>{application.coverLetter ? "Provided" : "Not provided"}</span>

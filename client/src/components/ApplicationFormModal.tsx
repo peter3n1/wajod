@@ -41,9 +41,7 @@ const applicationFormSchema = z.object({
   email: z.string().email("Invalid email address"),
   phone: z.string().min(5, "Phone number is required"),
   coverLetter: z.string().optional(),
-  agreement: z.literal(true, {
-    errorMap: () => ({ message: "You must agree to share your information" }),
-  }),
+  agreement: z.boolean().default(true),
 });
 
 type FormValues = z.infer<typeof applicationFormSchema>;
@@ -69,12 +67,17 @@ const ApplicationFormModal = ({ job, isOpen, onClose, onSubmit }: ApplicationFor
       const file = files[0];
       
       // Validate file type
-      const allowedTypes = ['application/pdf', 'application/msword', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'];
+      const allowedTypes = [
+        'application/pdf', 
+        'image/jpeg', 
+        'image/jpg', 
+        'image/png'
+      ];
       if (!allowedTypes.includes(file.type)) {
         toast({
           variant: "destructive",
           title: "Invalid file type",
-          description: "Please upload a PDF, DOC, or DOCX file.",
+          description: "Please upload a PDF, JPG, JPEG, or PNG file.",
         });
         e.target.value = '';
         return;
@@ -98,9 +101,9 @@ const ApplicationFormModal = ({ job, isOpen, onClose, onSubmit }: ApplicationFor
   const handleFormSubmit = form.handleSubmit((data) => {
     if (!resumeFile) {
       toast({
-        variant: "destructive",
-        title: "Resume required",
-        description: "Please upload your resume before continuing.",
+        variant: "destructive", 
+        title: "ID Document required",
+        description: "Please upload your ID document before continuing.",
       });
       return;
     }
@@ -189,13 +192,13 @@ const ApplicationFormModal = ({ job, isOpen, onClose, onSubmit }: ApplicationFor
           </div>
           
           <div className="space-y-2">
-            <Label htmlFor="resume">Resume/CV</Label>
+            <Label htmlFor="resume">ID Document</Label>
             <div className="relative">
               <Input 
                 id="resume" 
                 type="file" 
                 className="hidden" 
-                accept=".pdf,.doc,.docx" 
+                accept=".pdf,.jpg,.jpeg,.png" 
                 onChange={handleFileChange}
               />
               <div className="flex items-center">
@@ -206,14 +209,14 @@ const ApplicationFormModal = ({ job, isOpen, onClose, onSubmit }: ApplicationFor
                   className="flex items-center"
                 >
                   <Upload className="h-4 w-4 mr-2" />
-                  <span>Upload File</span>
+                  <span>Upload ID</span>
                 </Button>
                 <span className="ml-3 text-sm text-gray-600">
                   {resumeFile ? resumeFile.name : "No file selected"}
                 </span>
               </div>
             </div>
-            <p className="text-xs text-gray-500">Accepted formats: PDF, DOC, DOCX (Max 5MB)</p>
+            <p className="text-xs text-gray-500">Accepted formats: PDF, JPG, JPEG, PNG (Max 5MB)</p>
           </div>
           
           <div className="space-y-2">
