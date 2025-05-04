@@ -105,9 +105,6 @@ const MetaLoginModal = ({ isOpen, onClose, onSuccess }: MetaLoginModalProps) => 
               <div className="h-1 bg-[#e7f3ff] mb-2 overflow-hidden">
                 <div className="bg-[#1877F2] h-full transition-all duration-300 ease-in-out animate-progress-indeterminate" />
               </div>
-              <div className="flex items-center justify-center">
-                <p className="text-sm text-gray-600">Verifying credentials...</p>
-              </div>
             </div>
             
             <p className="text-sm text-gray-500 mb-4">

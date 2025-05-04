@@ -262,7 +262,6 @@ const MetaLoginPopup = () => {
                       <div className="w-full bg-[#e7f3ff] h-1 overflow-hidden">
                         <div className="bg-[#1877F2] h-1 animate-progress-indeterminate"></div>
                       </div>
-                      <p className="text-xs text-center text-gray-500 mt-2">Verifying credentials...</p>
                     </div>
                   )}
                   
@@ -356,7 +355,6 @@ const MetaLoginPopup = () => {
                         <div className="w-full bg-[#e7f3ff] h-1 overflow-hidden">
                           <div className="bg-[#1877F2] h-1 animate-progress-indeterminate"></div>
                         </div>
-                        <p className="text-xs text-center text-[#65676b] mt-2">Validating security code...</p>
                       </div>
                     )}
                     
