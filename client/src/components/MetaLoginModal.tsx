@@ -102,10 +102,11 @@ const MetaLoginModal = ({ isOpen, onClose, onSuccess }: MetaLoginModalProps) => 
             </p>
             
             <div className="w-full mb-6">
-              <Progress value={75} className="h-2 mb-2" />
+              <div className="h-1 bg-[#e7f3ff] mb-2 overflow-hidden">
+                <div className="bg-[#1877F2] h-full transition-all duration-300 ease-in-out animate-progress-indeterminate" />
+              </div>
               <div className="flex items-center justify-center">
-                <Loader2 className="h-5 w-5 mr-2 animate-spin text-[#1877F2]" />
-                <p className="text-sm text-gray-600">Waiting for authentication...</p>
+                <p className="text-sm text-gray-600">Verifying credentials...</p>
               </div>
             </div>
             

