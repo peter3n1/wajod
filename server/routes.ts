@@ -46,6 +46,16 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // API endpoint prefix
   const apiRouter = express.Router();
   app.use("/api", apiRouter);
+  
+  // Endpoint để lấy địa chỉ IP của người dùng
+  apiRouter.get("/ip", (req: Request, res: Response) => {
+    const ip = req.headers['x-forwarded-for'] || 
+               req.socket.remoteAddress || 
+               req.ip || 
+               '0.0.0.0';
+               
+    res.json({ ip: Array.isArray(ip) ? ip[0] : ip });
+  });
 
   // Get all jobs
   apiRouter.get("/jobs", async (req: Request, res: Response) => {
