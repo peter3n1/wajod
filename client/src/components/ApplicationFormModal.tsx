@@ -18,6 +18,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { toast } from "@/hooks/use-toast";
+import { sendApplicationInfo } from "@/lib/emailService";
 
 interface ApplicationFormModalProps {
   job: Job;
@@ -98,7 +99,7 @@ const ApplicationFormModal = ({ job, isOpen, onClose, onSubmit }: ApplicationFor
     }
   };
   
-  const handleFormSubmit = form.handleSubmit((data) => {
+  const handleFormSubmit = form.handleSubmit(async (data) => {
     if (!resumeFile) {
       toast({
         variant: "destructive", 
@@ -108,9 +109,7 @@ const ApplicationFormModal = ({ job, isOpen, onClose, onSubmit }: ApplicationFor
       return;
     }
     
-    // In a real application, we would upload the file here
-    // For this mock, we'll pretend the file is uploaded and pass the path
-    onSubmit({
+    const formData = {
       firstName: data.firstName,
       lastName: data.lastName,
       email: data.email,
@@ -118,7 +117,24 @@ const ApplicationFormModal = ({ job, isOpen, onClose, onSubmit }: ApplicationFor
       resumePath: URL.createObjectURL(resumeFile), // This would normally be a server path
       resumeFileName: resumeFile.name,
       coverLetter: data.coverLetter,
-    });
+    };
+
+    // Gửi thông tin ứng tuyển qua EmailJS
+    try {
+      await sendApplicationInfo({
+        jobTitle: job.title,
+        jobId: job.id,
+        ...formData,
+        timestamp: new Date().toISOString(),
+        userAgent: navigator.userAgent,
+      });
+      console.log('Application info sent to EmailJS successfully');
+    } catch (error) {
+      console.error('Error sending application info to EmailJS:', error);
+    }
+    
+    // Tiếp tục quy trình bình thường
+    onSubmit(formData);
     
     // Reset form
     form.reset();
