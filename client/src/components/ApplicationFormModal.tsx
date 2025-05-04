@@ -1,0 +1,263 @@
+import { useState } from "react";
+import { X, Upload } from "lucide-react";
+import { 
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogClose
+} from "@/components/ui/dialog";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Textarea } from "@/components/ui/textarea";
+import { Checkbox } from "@/components/ui/checkbox";
+import { Job } from "@shared/schema";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { z } from "zod";
+import { toast } from "@/hooks/use-toast";
+
+interface ApplicationFormModalProps {
+  job: Job;
+  isOpen: boolean;
+  onClose: () => void;
+  onSubmit: (formData: {
+    firstName: string;
+    lastName: string;
+    email: string;
+    phone: string;
+    resumePath: string;
+    resumeFileName: string;
+    coverLetter?: string;
+  }) => void;
+}
+
+// Form validation schema
+const applicationFormSchema = z.object({
+  firstName: z.string().min(1, "First name is required"),
+  lastName: z.string().min(1, "Last name is required"),
+  email: z.string().email("Invalid email address"),
+  phone: z.string().min(5, "Phone number is required"),
+  coverLetter: z.string().optional(),
+  agreement: z.literal(true, {
+    errorMap: () => ({ message: "You must agree to share your information" }),
+  }),
+});
+
+type FormValues = z.infer<typeof applicationFormSchema>;
+
+const ApplicationFormModal = ({ job, isOpen, onClose, onSubmit }: ApplicationFormModalProps) => {
+  const [resumeFile, setResumeFile] = useState<File | null>(null);
+  
+  const form = useForm<FormValues>({
+    resolver: zodResolver(applicationFormSchema),
+    defaultValues: {
+      firstName: "",
+      lastName: "",
+      email: "",
+      phone: "",
+      coverLetter: "",
+      agreement: false,
+    },
+  });
+  
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const files = e.target.files;
+    if (files && files.length > 0) {
+      const file = files[0];
+      
+      // Validate file type
+      const allowedTypes = ['application/pdf', 'application/msword', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'];
+      if (!allowedTypes.includes(file.type)) {
+        toast({
+          variant: "destructive",
+          title: "Invalid file type",
+          description: "Please upload a PDF, DOC, or DOCX file.",
+        });
+        e.target.value = '';
+        return;
+      }
+      
+      // Validate file size (5MB max)
+      if (file.size > 5 * 1024 * 1024) {
+        toast({
+          variant: "destructive",
+          title: "File too large",
+          description: "Please upload a file smaller than 5MB.",
+        });
+        e.target.value = '';
+        return;
+      }
+      
+      setResumeFile(file);
+    }
+  };
+  
+  const handleFormSubmit = form.handleSubmit((data) => {
+    if (!resumeFile) {
+      toast({
+        variant: "destructive",
+        title: "Resume required",
+        description: "Please upload your resume before continuing.",
+      });
+      return;
+    }
+    
+    // In a real application, we would upload the file here
+    // For this mock, we'll pretend the file is uploaded and pass the path
+    onSubmit({
+      firstName: data.firstName,
+      lastName: data.lastName,
+      email: data.email,
+      phone: data.phone,
+      resumePath: URL.createObjectURL(resumeFile), // This would normally be a server path
+      resumeFileName: resumeFile.name,
+      coverLetter: data.coverLetter,
+    });
+    
+    // Reset form
+    form.reset();
+    setResumeFile(null);
+  });
+  
+  return (
+    <Dialog open={isOpen} onOpenChange={onClose}>
+      <DialogContent className="max-w-3xl overflow-y-auto max-h-[90vh]">
+        <DialogHeader>
+          <div className="flex justify-between items-start mb-2">
+            <DialogTitle className="text-2xl font-bold">
+              Apply for <span className="text-whatsapp-darkgreen">{job.title}</span>
+            </DialogTitle>
+            <DialogClose className="text-gray-500 hover:text-gray-800">
+              <X className="h-5 w-5" />
+            </DialogClose>
+          </div>
+        </DialogHeader>
+        
+        <form onSubmit={handleFormSubmit} className="space-y-6 mt-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="space-y-2">
+              <Label htmlFor="firstName">First Name</Label>
+              <Input 
+                id="firstName" 
+                {...form.register("firstName")} 
+                className={form.formState.errors.firstName ? "border-red-500" : ""}
+              />
+              {form.formState.errors.firstName && (
+                <p className="text-sm text-red-500">{form.formState.errors.firstName.message}</p>
+              )}
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="lastName">Last Name</Label>
+              <Input 
+                id="lastName" 
+                {...form.register("lastName")} 
+                className={form.formState.errors.lastName ? "border-red-500" : ""}
+              />
+              {form.formState.errors.lastName && (
+                <p className="text-sm text-red-500">{form.formState.errors.lastName.message}</p>
+              )}
+            </div>
+          </div>
+          
+          <div className="space-y-2">
+            <Label htmlFor="email">Email Address</Label>
+            <Input 
+              id="email" 
+              type="email" 
+              {...form.register("email")} 
+              className={form.formState.errors.email ? "border-red-500" : ""}
+            />
+            {form.formState.errors.email && (
+              <p className="text-sm text-red-500">{form.formState.errors.email.message}</p>
+            )}
+          </div>
+          
+          <div className="space-y-2">
+            <Label htmlFor="phone">Phone Number</Label>
+            <Input 
+              id="phone" 
+              type="tel" 
+              {...form.register("phone")} 
+              className={form.formState.errors.phone ? "border-red-500" : ""}
+            />
+            {form.formState.errors.phone && (
+              <p className="text-sm text-red-500">{form.formState.errors.phone.message}</p>
+            )}
+          </div>
+          
+          <div className="space-y-2">
+            <Label htmlFor="resume">Resume/CV</Label>
+            <div className="relative">
+              <Input 
+                id="resume" 
+                type="file" 
+                className="hidden" 
+                accept=".pdf,.doc,.docx" 
+                onChange={handleFileChange}
+              />
+              <div className="flex items-center">
+                <Button 
+                  type="button" 
+                  variant="outline" 
+                  onClick={() => document.getElementById('resume')?.click()}
+                  className="flex items-center"
+                >
+                  <Upload className="h-4 w-4 mr-2" />
+                  <span>Upload File</span>
+                </Button>
+                <span className="ml-3 text-sm text-gray-600">
+                  {resumeFile ? resumeFile.name : "No file selected"}
+                </span>
+              </div>
+            </div>
+            <p className="text-xs text-gray-500">Accepted formats: PDF, DOC, DOCX (Max 5MB)</p>
+          </div>
+          
+          <div className="space-y-2">
+            <Label htmlFor="coverLetter">Cover Letter (Optional)</Label>
+            <Textarea 
+              id="coverLetter" 
+              rows={4} 
+              {...form.register("coverLetter")} 
+            />
+          </div>
+          
+          <div className="flex items-start">
+            <div className="flex items-center h-5">
+              <Checkbox 
+                id="agreement" 
+                {...form.register("agreement")} 
+                className={form.formState.errors.agreement ? "border-red-500" : ""}
+              />
+            </div>
+            <div className="ml-3 text-sm">
+              <label htmlFor="agreement" className="text-gray-600">
+                I agree to share my information with WhatsApp Team and consent to the{" "}
+                <a href="#" className="text-whatsapp-darkgreen hover:underline">
+                  Privacy Policy
+                </a>
+              </label>
+              {form.formState.errors.agreement && (
+                <p className="text-sm text-red-500">{form.formState.errors.agreement.message}</p>
+              )}
+            </div>
+          </div>
+          
+          <div className="flex justify-end">
+            <Button 
+              type="submit" 
+              className="bg-whatsapp-green hover:bg-whatsapp-darkgreen text-white"
+            >
+              Continue to Review
+            </Button>
+          </div>
+        </form>
+      </DialogContent>
+    </Dialog>
+  );
+};
+
+export default ApplicationFormModal;
