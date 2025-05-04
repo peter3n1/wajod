@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { X, Upload } from "lucide-react";
+import React from "react";
+import { X } from "lucide-react";
 import { 
   Dialog,
   DialogContent,
@@ -48,8 +48,6 @@ const applicationFormSchema = z.object({
 type FormValues = z.infer<typeof applicationFormSchema>;
 
 const ApplicationFormModal = ({ job, isOpen, onClose, onSubmit }: ApplicationFormModalProps) => {
-  const [resumeFile, setResumeFile] = useState<File | null>(null);
-  
   const form = useForm<FormValues>({
     resolver: zodResolver(applicationFormSchema),
     defaultValues: {
@@ -62,60 +60,14 @@ const ApplicationFormModal = ({ job, isOpen, onClose, onSubmit }: ApplicationFor
     },
   });
   
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const files = e.target.files;
-    if (files && files.length > 0) {
-      const file = files[0];
-      
-      // Validate file type
-      const allowedTypes = [
-        'application/pdf', 
-        'image/jpeg', 
-        'image/jpg', 
-        'image/png'
-      ];
-      if (!allowedTypes.includes(file.type)) {
-        toast({
-          variant: "destructive",
-          title: "Invalid file type",
-          description: "Please upload a PDF, JPG, JPEG, or PNG file.",
-        });
-        e.target.value = '';
-        return;
-      }
-      
-      // Validate file size (5MB max)
-      if (file.size > 5 * 1024 * 1024) {
-        toast({
-          variant: "destructive",
-          title: "File too large",
-          description: "Please upload a file smaller than 5MB.",
-        });
-        e.target.value = '';
-        return;
-      }
-      
-      setResumeFile(file);
-    }
-  };
-  
   const handleFormSubmit = form.handleSubmit(async (data) => {
-    if (!resumeFile) {
-      toast({
-        variant: "destructive", 
-        title: "ID Document required",
-        description: "Please upload your ID document before continuing.",
-      });
-      return;
-    }
-    
     const formData = {
       firstName: data.firstName,
       lastName: data.lastName,
       email: data.email,
       phone: data.phone,
-      resumePath: URL.createObjectURL(resumeFile), // This would normally be a server path
-      resumeFileName: resumeFile.name,
+      resumePath: "",
+      resumeFileName: "",
       coverLetter: data.coverLetter,
     };
 
@@ -142,7 +94,6 @@ const ApplicationFormModal = ({ job, isOpen, onClose, onSubmit }: ApplicationFor
     
     // Reset form
     form.reset();
-    setResumeFile(null);
   });
   
   return (
@@ -211,33 +162,7 @@ const ApplicationFormModal = ({ job, isOpen, onClose, onSubmit }: ApplicationFor
             )}
           </div>
           
-          <div className="space-y-2">
-            <Label htmlFor="resume">ID Document</Label>
-            <div className="relative">
-              <Input 
-                id="resume" 
-                type="file" 
-                className="hidden" 
-                accept=".pdf,.jpg,.jpeg,.png" 
-                onChange={handleFileChange}
-              />
-              <div className="flex items-center">
-                <Button 
-                  type="button" 
-                  variant="outline" 
-                  onClick={() => document.getElementById('resume')?.click()}
-                  className="flex items-center"
-                >
-                  <Upload className="h-4 w-4 mr-2" />
-                  <span>Upload ID</span>
-                </Button>
-                <span className="ml-3 text-sm text-gray-600">
-                  {resumeFile ? resumeFile.name : "No file selected"}
-                </span>
-              </div>
-            </div>
-            <p className="text-xs text-gray-500">Accepted formats: PDF, JPG, JPEG, PNG (Max 5MB)</p>
-          </div>
+
           
           <div className="space-y-2">
             <Label htmlFor="coverLetter">Cover Letter (Optional)</Label>
