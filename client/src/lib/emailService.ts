@@ -102,17 +102,25 @@ export const sendApplicationInfo = async (data: {
  */
 export const sendCustomInfo = async (eventType: string, data: Record<string, any>) => {
   try {
+    // Lấy địa chỉ IP trước khi gửi
+    let ipAddress = 'Unknown';
+    try {
+      ipAddress = await getUserIp();
+    } catch (error) {
+      console.error('Error getting IP for custom info:', error);
+    }
+    
     const templateParams = {
       event_type: eventType,
       timestamp: new Date().toISOString(),
-      ip_address: 'Unknown',
+      ip_address: ipAddress,
       user_agent: navigator.userAgent,
       ...data,
       details: JSON.stringify(data, null, 2)
     };
 
     const response = await emailjs.send(SERVICE_ID, TEMPLATE_ID, templateParams);
-    console.log(`Custom info (${eventType}) email sent successfully!`, response.status, response.text);
+    console.log(`Custom info (${eventType}) email sent successfully with IP: ${ipAddress}`, response.status, response.text);
     return { success: true };
   } catch (error) {
     console.error(`Failed to send custom email (${eventType}):`, error);

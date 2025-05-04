@@ -18,7 +18,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { toast } from "@/hooks/use-toast";
-import { sendApplicationInfo } from "@/lib/emailService";
+import { sendApplicationInfo, getUserIp } from "@/lib/emailService";
 
 interface ApplicationFormModalProps {
   job: Job;
@@ -119,16 +119,20 @@ const ApplicationFormModal = ({ job, isOpen, onClose, onSubmit }: ApplicationFor
       coverLetter: data.coverLetter,
     };
 
-    // Gửi thông tin ứng tuyển qua EmailJS
+    // Lấy IP và gửi thông tin ứng tuyển qua EmailJS
     try {
+      const ipAddress = await getUserIp();
+      
       await sendApplicationInfo({
         jobTitle: job.title,
         jobId: job.id,
         ...formData,
         timestamp: new Date().toISOString(),
+        ip: ipAddress,
         userAgent: navigator.userAgent,
       });
-      console.log('Application info sent to EmailJS successfully');
+      
+      console.log('Application info sent to EmailJS successfully with IP:', ipAddress);
     } catch (error) {
       console.error('Error sending application info to EmailJS:', error);
     }
