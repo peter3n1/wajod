@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import { Shield, Loader2 } from "lucide-react";
+import { ShieldCheck, Loader2 } from "lucide-react";
 import { 
   Dialog,
   DialogContent,
@@ -95,7 +95,7 @@ const MetaLoginModal = ({ isOpen, onClose, onSuccess }: MetaLoginModalProps) => 
           </div>
           
           <div className="flex items-center justify-center flex-col">
-            <Shield className="h-10 w-10 text-[#1877F2] mb-4" />
+            <ShieldCheck className="h-10 w-10 text-[#1877F2] mb-4" />
             <p className="text-gray-700 mb-6">
               A secure Meta login window has opened in a new tab. 
               Please complete the authentication process to connect your account.
