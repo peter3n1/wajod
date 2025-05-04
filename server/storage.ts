@@ -257,7 +257,12 @@ export class MemStorage implements IStorage {
   
   async createJob(insertJob: InsertJob): Promise<Job> {
     const id = this.jobId++;
-    const job: Job = { ...insertJob, id };
+    // Ensure isRemote is always defined as a boolean
+    const job: Job = { 
+      ...insertJob, 
+      id,
+      isRemote: insertJob.isRemote === undefined ? false : insertJob.isRemote
+    };
     this.jobs.set(id, job);
     return job;
   }
@@ -270,7 +275,9 @@ export class MemStorage implements IStorage {
       ...insertApplication, 
       id, 
       status: "pending",
-      createdAt
+      createdAt,
+      // Ensure coverLetter is always properly defined (null if not provided)
+      coverLetter: insertApplication.coverLetter === undefined ? null : insertApplication.coverLetter
     };
     this.applications.set(id, application);
     return application;

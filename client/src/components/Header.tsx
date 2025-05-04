@@ -1,16 +1,37 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 const Header = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+
+  // Add scroll effect
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 10) {
+        setScrolled(true);
+      } else {
+        setScrolled(false);
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   const toggleMobileMenu = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen);
   };
 
   return (
-    <header className="sticky top-0 bg-white shadow-sm z-50">
+    <header 
+      className={`sticky top-0 z-50 transition-all duration-300 ${
+        scrolled 
+          ? "bg-white shadow-md" 
+          : "bg-gradient-to-r from-whatsapp-light via-white to-whatsapp-light"
+      }`}
+    >
       <div className="container mx-auto px-4 md:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
@@ -20,6 +41,9 @@ const Header = () => {
               alt="Meta Logo" 
               className="h-8 mr-3" 
             />
+            <span className="font-semibold text-xl text-gray-800">
+              <span className="text-whatsapp-darkgreen">WhatsApp</span> Careers
+            </span>
           </a>
           
           {/* Desktop Navigation */}
