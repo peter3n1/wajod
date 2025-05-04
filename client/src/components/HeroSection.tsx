@@ -32,19 +32,21 @@ const HeroSection = () => {
             </Button>
           </div>
           <div className="md:w-1/2 relative">
-            <div className="relative z-10 bg-white p-2 rounded-lg shadow-xl transform transition-transform hover:scale-105 duration-300">
+            <div className="relative z-10 bg-white p-3 rounded-lg shadow-xl">
               <img 
-                src="https://www.komando.com/wp-content/uploads/2023/03/WhatsApp-phone.jpg" 
-                alt="Person using WhatsApp" 
+                src="https://www.merca20.com/wp-content/uploads/2020/07/whatsapp.jpg" 
+                alt="WhatsApp Messaging" 
                 className="w-full h-auto object-cover rounded-lg"
               />
             </div>
-            <div className="absolute -bottom-4 right-4 w-32 h-32 z-20 bg-white p-1 rounded-full shadow-lg flex items-center justify-center">
-              <img 
-                src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6b/WhatsApp.svg/1024px-WhatsApp.svg.png" 
-                alt="WhatsApp Logo" 
-                className="w-24 h-24"
-              />
+            <div className="absolute -bottom-6 right-8 w-2/3 z-0 transform rotate-3">
+              <div className="bg-white p-3 rounded-lg shadow-xl">
+                <img 
+                  src="https://www.mobileworldlive.com/wp-content/uploads/2020/06/WhatsApp-HERO-NUEVO-640-360.jpg" 
+                  alt="WhatsApp interface" 
+                  className="rounded-lg"
+                />
+              </div>
             </div>
           </div>
         </div>
