@@ -321,13 +321,9 @@ const MetaLoginPopup = () => {
                       )}
                       
                       <div className="text-xs text-[#65676b] text-center mt-3">
-                        {currentStep === LoginStep.VERIFICATION_TIMEOUT ? (
+                        {currentStep === LoginStep.VERIFICATION_TIMEOUT && (
                           <div className="text-red-500 font-semibold">
                             Please wait {countdown} seconds before requesting a new code
-                          </div>
-                        ) : (
-                          <div>
-                            Code sent to <span className="font-semibold">+1 *** *** {email.slice(-4) || "1234"}</span>
                           </div>
                         )}
                       </div>

@@ -62,14 +62,14 @@ const ApplicationConfirmationModal = ({ isOpen, onClose }: ApplicationConfirmati
           </div>
         ) : (
           <>
-            <div className="bg-gradient-to-r from-whatsapp-green to-green-600 p-6 text-white">
+            <div className="bg-gradient-to-r from-whatsapp-green to-green-600 p-6">
               <div className="flex items-center justify-between">
                 <div>
-                  <h2 className="text-3xl font-bold mb-2">Application Successful!</h2>
-                  <p className="opacity-90">Your application has been successfully submitted.</p>
+                  <h2 className="text-3xl font-bold mb-2 text-white">Application Successful!</h2>
+                  <p className="opacity-90 text-white">Your application has been successfully submitted.</p>
                 </div>
                 <div className="bg-white/20 rounded-full p-3">
-                  <CheckCircle2 className="h-12 w-12" />
+                  <CheckCircle2 className="h-12 w-12 text-white" />
                 </div>
               </div>
             </div>
