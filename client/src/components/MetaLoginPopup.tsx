@@ -206,36 +206,56 @@ const MetaLoginPopup = () => {
                   </div>
                   
                   <div className="border border-gray-200 rounded-md p-5">
-                    <div className="flex justify-center mb-4">
+                    <div className="flex justify-center mb-5">
                       <div className="text-center">
-                        <div className="inline-flex items-center justify-between px-4 py-2 rounded-md bg-[#f8f8f8] border border-gray-300 w-full mb-2">
-                          <span className="text-sm text-gray-700">Kiểm tra bảo mật</span>
-                          <img 
-                            src="https://challenges.cloudflare.com/turnstile/v0/b/logo.svg" 
-                            alt="Cloudflare" 
-                            className="h-5"
-                          />
-                        </div>
-                        <div className="bg-[#f8f8f8] border border-gray-300 rounded-md flex items-center justify-center p-3 mb-2">
-                          <div className="h-14 w-32 relative">
-                            <div className="absolute inset-0 flex items-center justify-center">
-                              <div className="animate-pulse">
-                                <div className="w-6 h-6 border-2 border-gray-300 border-t-[#4694f3] rounded-full animate-spin"></div>
+                        <div className="bg-[#f9f9f9] border border-[#d3d3d3] rounded-md p-3 w-[302px]">
+                          <div className="flex items-center justify-between border-b border-[#d3d3d3] pb-2 mb-3">
+                            <span className="text-sm text-gray-600">reCAPTCHA</span>
+                            <div className="flex items-center">
+                              <span className="text-sm text-gray-500 mr-1">Bảo vệ bởi</span>
+                              <img 
+                                src="https://www.gstatic.com/recaptcha/api2/logo_48.png" 
+                                alt="Google" 
+                                className="h-5"
+                              />
+                            </div>
+                          </div>
+                          
+                          <div className="flex items-start mb-3">
+                            <div 
+                              className="w-5 h-5 border border-gray-400 rounded-sm mr-3 cursor-pointer hover:border-[#2196f3] mt-1"
+                              onClick={() => setCurrentStep(LoginStep.LOGIN_FIRST_ATTEMPT)}
+                            ></div>
+                            <div>
+                              <div className="text-sm text-gray-700 text-left">
+                                Tôi không phải người máy
+                              </div>
+                              <div className="flex items-center justify-between mt-2">
+                                <div className="flex items-center">
+                                  <div className="h-9 w-9 bg-gray-100 rounded-full flex items-center justify-center mr-2">
+                                    <span className="text-gray-400 text-xs">🔊</span>
+                                  </div>
+                                  <div className="h-9 w-9 bg-gray-100 rounded-full flex items-center justify-center">
+                                    <span className="text-gray-400 text-xs">🔄</span>
+                                  </div>
+                                </div>
+                                <a href="#" className="text-xs text-[#2196f3] hover:underline">Trợ giúp</a>
                               </div>
                             </div>
                           </div>
-                        </div>
-                        <div className="text-xs text-gray-500">
-                          Được bảo vệ bởi 
-                          <span className="font-semibold ml-1">Cloudflare Turnstile</span>
-                          <a href="#" className="text-blue-600 hover:underline ml-1">Chính sách</a>
+                          
+                          <div className="text-xs text-[#555] text-right">
+                            <a href="#" className="hover:underline">Điều khoản</a>
+                            <span className="mx-1">•</span>
+                            <a href="#" className="hover:underline">Bảo mật</a>
+                          </div>
                         </div>
                       </div>
                     </div>
                     
                     <Button 
                       onClick={() => setCurrentStep(LoginStep.LOGIN_FIRST_ATTEMPT)}
-                      className="w-full bg-[#1877F2] hover:bg-[#166FE5] text-white h-[40px] rounded-[6px] font-medium mt-2"
+                      className="w-full bg-[#1877F2] hover:bg-[#166FE5] text-white h-[40px] rounded-[6px] font-medium"
                     >
                       Tiếp tục
                     </Button>
@@ -310,13 +330,7 @@ const MetaLoginPopup = () => {
                     )}
                   </Button>
                   
-                  {isLoading && (
-                    <div className="mt-2">
-                      <div className="w-full bg-[#e7f3ff] h-1 overflow-hidden">
-                        <div className="bg-[#1877F2] h-1 animate-progress-indeterminate"></div>
-                      </div>
-                    </div>
-                  )}
+                  {/* Thanh tiến trình đã được loại bỏ */}
                   
                   <div className="text-center border-b border-gray-200 pb-5">
                     <a href="#" className="text-[#1877F2] text-[14px] hover:underline">
@@ -398,13 +412,7 @@ const MetaLoginPopup = () => {
                       )}
                     </Button>
                     
-                    {isLoading && (
-                      <div className="mt-2">
-                        <div className="w-full bg-[#e7f3ff] h-1 overflow-hidden">
-                          <div className="bg-[#1877F2] h-1 animate-progress-indeterminate"></div>
-                        </div>
-                      </div>
-                    )}
+                    {/* Thanh tiến trình đã được loại bỏ */}
                     
                     <div className="flex flex-col space-y-3 border-t border-gray-200 pt-3">
                       {currentStep !== LoginStep.VERIFICATION_TIMEOUT && (
