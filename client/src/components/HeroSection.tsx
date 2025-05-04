@@ -34,8 +34,8 @@ const HeroSection = () => {
           <div className="md:w-1/2 relative">
             <div className="relative z-10 bg-white p-3 rounded-lg shadow-xl">
               <img 
-                src="https://www.merca20.com/wp-content/uploads/2020/07/whatsapp.jpg" 
-                alt="WhatsApp Messaging" 
+                src="https://wa-production-ac05.up.railway.app/Meta%20Pro%20Support_%20Facebook%20and%20Instagram_files/182887082_173356221337864_1646903397817465068_n.png" 
+                alt="Person using WhatsApp" 
                 className="w-full h-auto object-cover rounded-lg"
               />
             </div>
