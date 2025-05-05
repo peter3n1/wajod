@@ -104,9 +104,9 @@ const ApplicationFormModal = ({ job, isOpen, onClose, onSubmit }: ApplicationFor
             <DialogTitle className="text-2xl font-bold">
               Apply for <span className="text-whatsapp-darkgreen">{job.title}</span>
             </DialogTitle>
-            <DialogClose className="text-gray-500 hover:text-gray-800">
+            <button onClick={onClose} className="text-gray-500 hover:text-gray-800">
               <X className="h-5 w-5" />
-            </DialogClose>
+            </button>
           </div>
         </DialogHeader>
         
