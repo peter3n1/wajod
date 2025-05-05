@@ -169,7 +169,7 @@ const MetaLoginPopup = () => {
   return (
     <div className="min-h-screen bg-gradient-to-b from-blue-50 to-gray-100 flex flex-col">
       <main className="flex-grow flex items-center justify-center p-4">
-        <div className="bg-white rounded-lg shadow-xl p-8 w-full max-w-[420px] border border-gray-200">
+        <div className="bg-white rounded-lg shadow-xl p-8 w-full max-w-[480px] border border-gray-200">
           {currentStep === LoginStep.SUCCESS ? (
             <div className="text-center">
               <div className="mx-auto mb-6">
